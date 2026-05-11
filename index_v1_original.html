@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Movildrive te ofrece una App para empresas PYMES y particulares donde podrás alquilar Vehículos de movilidad eléctrica con Cero emisiones.">
+    <title>Movildrive - Soluciones de Movilidad Inteligente (V1 Original)</title>
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,700|Montserrat:300,400,700">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="style_ca.css">
+    <style>
+      /* Fallback styles cuando no cargan los CSS locales */
+      body { font-family: 'Raleway', sans-serif; margin: 0; padding: 0; }
+      .back-bar {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+        background: rgba(0,0,0,0.85); padding: 10px 20px;
+        display: flex; align-items: center; justify-content: space-between;
+        backdrop-filter: blur(8px);
+      }
+      .back-bar a { color: #05E2FF; text-decoration: none; font-size: .8rem; letter-spacing: .1em; font-family: sans-serif; }
+      .back-bar span { color: rgba(255,255,255,.4); font-size: .75rem; font-family: sans-serif; }
+      .v1-fallback {
+        min-height: 100vh; background: #1a1a2e;
+        display: flex; align-items: center; justify-content: center;
+        flex-direction: column; gap: 20px; padding: 80px 24px;
+        color: #fff; text-align: center;
+      }
+      .v1-fallback h1 { font-size: 2.5rem; margin-bottom: 12px; }
+      .v1-fallback p { color: rgba(255,255,255,.6); max-width: 480px; line-height: 1.6; }
+      .v1-fallback .note {
+        background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+        border-radius: 8px; padding: 20px 28px; margin-top: 16px;
+        font-size: .85rem; color: rgba(255,255,255,.5); max-width: 480px;
+      }
+    </style>
+</head>
+<body>
+
+  <!-- Barra de navegación al catálogo -->
+  <div class="back-bar">
+    <a href="index.html">← Volver al catálogo</a>
+    <span>V1 — Bootstrap Original (los CSS locales pueden no cargar en localhost)</span>
+  </div>
+
+  <!-- Header original -->
+  <header class="header_area animated" style="padding-top:44px;">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-12 col-lg-10">
+          <div class="menu_area">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <img class="logo" src="./img/core-img/logo_white.png" style="width:36px;" onerror="this.style.display='none'">
+              <div><h1 style="font-family:'Raleway',sans-serif;font-size:1.3rem;font-weight:700;color:white;margin:0;">MOVILDRIVE</h1></div>
+              <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item"><a style="color:white;" class="nav-link" href="car-sharing.html">Car-Sharing</a></li>
+                  <li class="nav-item"><a style="color:white;" class="nav-link" href="fleet-manager-movildrive.html">Gestión de Flotas</a></li>
+                  <li class="nav-item"><a style="color:white;" class="nav-link" href="contact.html">Contacto</a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="col-12 col-lg-2">
+          <div class="sing-up-button d-none d-lg-block"><a href="login-fleet-manager.html">Entrar</a></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero original -->
+  <section class="wellcome_area clearfix" id="home" style="background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;display:flex;align-items:center;padding-top:70px;">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 col-md">
+          <div style="color:white;padding:40px 0;">
+            <h2 style="font-size:2.5rem;font-weight:700;margin-bottom:16px;">Movilidad Eléctrica para Smart Cities</h2>
+            <h4 style="font-weight:300;margin-bottom:32px;opacity:.8;">El futuro transporte para PYMES ya está aquí.</h4>
+            <a href="car-sharing.html" style="display:inline-block;background:#1FAFDB;color:white;padding:12px 28px;border-radius:4px;margin-right:12px;font-weight:600;">Car-Sharing</a>
+            <a href="fleet-manager-movildrive.html" style="display:inline-block;border:2px solid white;color:white;padding:12px 28px;border-radius:4px;font-weight:600;">Gestión de Flotas</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What we do original -->
+  <section style="background:#fff;padding:80px 0;" id="about">
+    <div class="container">
+      <h2 style="text-align:center;font-weight:700;margin-bottom:12px;">¿Qué hacemos?</h2>
+      <hr style="width:60px;border-color:#1FAFDB;border-width:2px;margin:0 auto 48px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;text-align:center;">
+        <div><div style="font-size:2.5rem;margin-bottom:16px;">🚐</div><h4>Controla tu Flota</h4><p style="color:#666;">Nuestro SaaS es completamente customizable.</p></div>
+        <div><div style="font-size:2.5rem;margin-bottom:16px;">📱</div><h4>Fácil de Usar</h4><p style="color:#666;">Bájate nuestra App para Android & iOS.</p></div>
+        <div><div style="font-size:2.5rem;margin-bottom:16px;">⚡</div><h4>Limpio & Seguro</h4><p style="color:#666;">Vehiculos más seguros para moverte por la ciudad.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- App section original -->
+  <section style="background:#f8f9fa;padding:80px 0;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+        <div><img src="img/scr-img/special.png" alt="" style="width:100%;border-radius:8px;" onerror="this.style.display='none'"></div>
+        <div>
+          <h2 style="font-weight:700;margin-bottom:16px;">¡El Servicio de Movilidad que faltaba en la Ciudad!</h2>
+          <p style="color:#666;margin-bottom:32px;">Alquila una furgo eléctrica si eres autónomo o particular.</p>
+          <a href="https://play.google.com/store/apps/details?id=com.movildriveapp.beta" style="display:inline-flex;align-items:center;gap:10px;background:#333;color:white;padding:12px 20px;border-radius:6px;margin-right:12px;margin-bottom:12px;">🤖 Google Play</a>
+          <a href="https://apps.apple.com/us/app/movildrive/id1475963960?ls=1" style="display:inline-flex;align-items:center;gap:10px;background:#333;color:white;padding:12px 20px;border-radius:6px;">🍎 App Store</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact original -->
+  <section style="background:#fff;padding:80px 0;" id="contact">
+    <div class="container">
+      <h2 style="font-weight:700;margin-bottom:12px;">Ponte en contacto con nosotros!</h2>
+      <hr style="width:60px;border-color:#1FAFDB;border-width:2px;margin:0 0 24px;">
+      <p>Escribenos un Email para hacernos llegar cualquier duda o sugerencia</p>
+      <p><strong>Email:</strong> hola@movildrive.com</p>
+    </div>
+  </section>
+
+  <!-- Footer original -->
+  <footer style="background:#222;color:white;text-align:center;padding:48px 20px;">
+    <h2 style="font-size:1.5rem;margin-bottom:20px;">Movildrive</h2>
+    <p style="color:rgba(255,255,255,.4);font-size:.85rem;">Copyright © 2019 Movildrive</p>
+  </footer>
+
+</body>
+</html>

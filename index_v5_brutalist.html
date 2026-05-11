@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movildrive — Swiss Brutalist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,700;1,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{--red:#E8001D;--bg:#F5F2EE;--dark:#0A0A0A;--text:#0A0A0A;--muted:#777;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow Condensed',sans-serif;font-weight:300;line-height:1.5;overflow-x:hidden;cursor:crosshair;}
+
+/* PROGRESS */
+#sp{position:fixed;bottom:0;left:0;height:3px;width:0;background:var(--red);z-index:9999;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--bg);border-bottom:2px solid var(--dark);padding:0 48px;display:flex;align-items:stretch;height:56px;}
+nav.stuck{background:var(--bg);}
+.n-brand{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.1em;color:var(--dark);text-decoration:none;display:flex;align-items:center;border-right:2px solid var(--dark);padding-right:28px;margin-right:28px;}
+.n-links{display:flex;align-items:center;gap:0;list-style:none;flex:1;}
+.n-links li{border-right:1px solid rgba(10,10,10,.1);}
+.n-links a{display:flex;align-items:center;height:56px;padding:0 20px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .15s,background .15s;}
+.n-links a:hover{color:var(--dark);background:rgba(10,10,10,.04);}
+.n-enter{background:var(--red)!important;color:#fff!important;font-weight:700!important;padding:0 24px!important;margin-left:auto;}
+.n-enter:hover{background:#b80018!important;color:#fff!important;}
+@media(max-width:768px){nav{padding:0 16px;}.n-links{display:none;}}
+
+/* HERO */
+.hero{min-height:100vh;padding:80px 0 0;display:grid;grid-template-rows:1fr auto;border-bottom:2px solid var(--dark);}
+.hero-top{padding:60px 48px 40px;display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:2px solid var(--dark);}
+@media(max-width:768px){.hero-top{grid-template-columns:1fr;padding:40px 20px;}}
+.hero-title-block{border-right:2px solid var(--dark);padding-right:48px;}
+@media(max-width:768px){.hero-title-block{border-right:none;border-bottom:2px solid var(--dark);padding-right:0;padding-bottom:32px;margin-bottom:32px;}}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,13vw,13rem);line-height:.88;letter-spacing:-.01em;opacity:0;}
+.hero-title span{display:block;}
+.hero-title .red{color:var(--red);}
+.hero-right{padding-left:48px;display:flex;flex-direction:column;justify-content:space-between;}
+@media(max-width:768px){.hero-right{padding-left:0;}}
+.hero-desc{font-size:1.05rem;font-weight:300;color:var(--muted);max-width:360px;margin-bottom:32px;opacity:0;transform:translateY(12px);}
+.hero-ctas{display:flex;flex-direction:column;gap:0;border:2px solid var(--dark);opacity:0;}
+.cta-item{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:2px solid var(--dark);text-decoration:none;color:var(--dark);transition:background .15s;}
+.cta-item:last-child{border-bottom:none;}
+.cta-item:hover{background:var(--dark);color:var(--bg);}
+.cta-item:hover .cta-arr{color:var(--bg);}
+.cta-label{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.06em;}
+.cta-arr{color:var(--red);font-size:1.2rem;}
+.cta-item:hover .cta-arr{color:var(--red);}
+.hero-strip{display:flex;overflow:hidden;border-top:2px solid var(--dark);background:var(--dark);}
+.strip-inner{display:flex;gap:60px;padding:10px 30px;animation:marquee 12s linear infinite;white-space:nowrap;}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.strip-item{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.12em;color:var(--bg);display:flex;align-items:center;gap:16px;}
+.strip-dot{width:5px;height:5px;border-radius:50%;background:var(--red);}
+
+/* INDEX SECTIONS */
+.idx-section{border-bottom:2px solid var(--dark);}
+.idx-header{display:flex;align-items:center;border-bottom:2px solid var(--dark);}
+.idx-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,6rem);color:var(--red);padding:20px 36px;border-right:2px solid var(--dark);line-height:1;}
+.idx-label{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em;padding:0 36px;}
+.idx-body{padding:48px;}
+@media(max-width:768px){.idx-body{padding:28px 20px;}.idx-num{padding:14px 20px;}.idx-label{padding:0 16px;font-size:1.2rem;}}
+
+/* WHAT GRID */
+.what-row{display:grid;grid-template-columns:repeat(3,1fr);}
+@media(max-width:768px){.what-row{grid-template-columns:1fr;}}
+.what-cell{border-right:2px solid var(--dark);padding:32px 28px;opacity:0;transform:translateY(16px);}
+.what-cell:last-child{border-right:none;}
+@media(max-width:768px){.what-cell{border-right:none;border-bottom:2px solid var(--dark);}}
+.wc-num{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:rgba(10,10,10,.08);line-height:1;margin-bottom:16px;}
+.wc-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;margin-bottom:10px;color:var(--dark);}
+.wc-text{font-size:.88rem;font-weight:300;color:var(--muted);line-height:1.75;}
+
+/* STATS STRIP */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid var(--dark);}
+@media(max-width:768px){.stats-row{grid-template-columns:1fr;}}
+.stat-cell{border-right:2px solid var(--dark);padding:40px 36px;text-align:center;}
+.stat-cell:last-child{border-right:none;}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,7vw,6rem);color:var(--dark);line-height:1;}
+.stat-n span{color:var(--red);}
+.stat-l{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px;}
+
+/* APP */
+.app-grid{display:grid;grid-template-columns:1fr 1fr;}
+@media(max-width:768px){.app-grid{grid-template-columns:1fr;}}
+.app-img-block{position:relative;overflow:hidden;opacity:0;}
+.app-img-block img{width:100%;height:100%;object-fit:cover;filter:grayscale(40%) contrast(1.1);min-height:400px;}
+.app-img-block::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 70%,var(--bg));}
+.app-txt-block{padding:48px;display:flex;flex-direction:column;justify-content:center;border-left:2px solid var(--dark);opacity:0;transform:translateX(20px);}
+@media(max-width:768px){.app-txt-block{border-left:none;border-top:2px solid var(--dark);padding:32px 20px;}}
+.app-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3rem);letter-spacing:.02em;margin-bottom:16px;line-height:1.05;}
+.app-title span{color:var(--red);}
+.app-desc{font-size:.9rem;font-weight:300;color:var(--muted);margin-bottom:32px;}
+.app-links{display:flex;flex-direction:column;gap:0;}
+.app-lnk{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(10,10,10,.12);text-decoration:none;color:var(--dark);transition:color .15s;}
+.app-lnk:hover{color:var(--red);}
+.app-lnk-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.05em;}
+.app-lnk-ico{font-size:1.2rem;}
+
+/* FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+@media(max-width:768px){.feat-grid{grid-template-columns:1fr;}}
+.feat-cell{border-right:2px solid var(--dark);padding:32px 28px;opacity:0;transform:translateY(14px);}
+.feat-cell:last-child{border-right:none;}
+@media(max-width:768px){.feat-cell{border-right:none;border-bottom:2px solid var(--dark);}}
+.feat-ico{font-size:2rem;margin-bottom:16px;display:block;}
+.feat-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;margin-bottom:8px;}
+.feat-text{font-size:.85rem;font-weight:300;color:var(--muted);line-height:1.75;}
+
+/* VIDEO */
+.vid-section{position:relative;overflow:hidden;opacity:0;}
+.vid-section img{width:100%;aspect-ratio:21/9;object-fit:cover;filter:grayscale(60%) contrast(1.1);}
+@media(max-width:768px){.vid-section img{aspect-ratio:16/9;}}
+.vid-over{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.vid-cta{display:flex;align-items:center;gap:14px;background:var(--bg);border:2px solid var(--dark);padding:14px 28px;text-decoration:none;color:var(--dark);transition:background .15s;}
+.vid-cta:hover{background:var(--dark);color:var(--bg);}
+.vid-cta-label{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.1em;}
+.vid-play-sq{width:32px;height:32px;background:var(--red);display:flex;align-items:center;justify-content:center;}
+.vid-play-sq svg path{fill:#fff;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+.cc-l{padding:60px 48px;border-right:2px solid var(--dark);}
+@media(max-width:768px){.cc-l{border-right:none;border-bottom:2px solid var(--dark);padding:40px 20px;}}
+.cc-r{padding:60px 48px;display:flex;flex-direction:column;justify-content:center;}
+@media(max-width:768px){.cc-r{padding:40px 20px;}}
+.cc-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5rem);line-height:.95;margin-bottom:20px;}
+.cc-title span{color:var(--red);}
+.cc-sub{font-size:.9rem;font-weight:300;color:var(--muted);}
+.cc-email{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:.03em;color:var(--dark);text-decoration:none;border-bottom:3px solid var(--red);padding-bottom:4px;display:inline-block;transition:color .15s;}
+.cc-email:hover{color:var(--red);}
+.cc-note{font-size:.8rem;color:var(--muted);font-family:'Space Mono',monospace;margin-top:16px;}
+
+/* FOOTER */
+footer{background:var(--dark);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+@media(max-width:768px){footer{padding:24px 20px;flex-direction:column;}}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.12em;color:var(--bg);}
+.f-links{display:flex;gap:20px;list-style:none;}
+.f-links a{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,238,.4);text-decoration:none;transition:color .15s;}
+.f-links a:hover{color:var(--bg);}
+.f-copy{font-size:.72rem;color:rgba(245,242,238,.25);font-family:'Space Mono',monospace;}
+</style>
+</head>
+<body>
+<div id="sp"></div>
+
+<nav id="nav">
+  <a href="/" class="n-brand">MOVILDRIVE</a>
+  <ul class="n-links">
+    <li><a href="car-sharing.html">Car-Sharing</a></li>
+    <li><a href="fleet-manager-movildrive.html">Flotas</a></li>
+    <li><a href="contact.html">Contacto</a></li>
+    <li><a href="login-fleet-manager.html" class="n-enter">Entrar →</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-title-block">
+      <h1 class="hero-title" id="ht">
+        <span>Movilidad</span>
+        <span class="red">Eléctrica</span>
+        <span>Para</span>
+        <span>Smart Cities</span>
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-desc" id="hd">El futuro del transporte para PYMES y autónomos. Alquila vehículos eléctricos de forma flexible, sin emisiones.</p>
+      <div class="hero-ctas" id="hc">
+        <a href="car-sharing.html" class="cta-item"><span class="cta-label">Car-Sharing</span><span class="cta-arr">→</span></a>
+        <a href="fleet-manager-movildrive.html" class="cta-item"><span class="cta-label">Gestión de Flotas</span><span class="cta-arr">→</span></a>
+        <a href="login-fleet-manager.html" class="cta-item"><span class="cta-label">Entrar</span><span class="cta-arr">→</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="strip-inner">
+      <div class="strip-item"><div class="strip-dot"></div>MOVILIDAD ELÉCTRICA</div>
+      <div class="strip-item"><div class="strip-dot"></div>CERO EMISIONES</div>
+      <div class="strip-item"><div class="strip-dot"></div>SMART CITIES</div>
+      <div class="strip-item"><div class="strip-dot"></div>PYMES Y AUTÓNOMOS</div>
+      <div class="strip-item"><div class="strip-dot"></div>CAR-SHARING</div>
+      <div class="strip-item"><div class="strip-dot"></div>GESTIÓN DE FLOTAS</div>
+      <div class="strip-item"><div class="strip-dot"></div>MOVILIDAD ELÉCTRICA</div>
+      <div class="strip-item"><div class="strip-dot"></div>CERO EMISIONES</div>
+      <div class="strip-item"><div class="strip-dot"></div>SMART CITIES</div>
+      <div class="strip-item"><div class="strip-dot"></div>PYMES Y AUTÓNOMOS</div>
+      <div class="strip-item"><div class="strip-dot"></div>CAR-SHARING</div>
+      <div class="strip-item"><div class="strip-dot"></div>GESTIÓN DE FLOTAS</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-cell"><div class="stat-n">500<span>+</span></div><div class="stat-l">Usuarios Activos</div></div>
+  <div class="stat-cell"><div class="stat-n"><span>0</span>g</div><div class="stat-l">Emisiones CO₂</div></div>
+  <div class="stat-cell"><div class="stat-n">24<span>/7</span></div><div class="stat-l">Soporte</div></div>
+</div>
+
+<!-- SECTION 01 -->
+<div class="idx-section">
+  <div class="idx-header"><div class="idx-num">01</div><div class="idx-label">¿Qué hacemos?</div></div>
+  <div class="what-row">
+    <div class="what-cell rv"><div class="wc-num">01</div><div class="wc-title">Control de Flota</div><p class="wc-text">Plataforma SaaS personalizable. Monitoriza tus vehículos en tiempo real.</p></div>
+    <div class="what-cell rv"><div class="wc-num">02</div><div class="wc-title">App Móvil</div><p class="wc-text">Android e iOS. Reserva y usa un vehículo en minutos desde el móvil.</p></div>
+    <div class="what-cell rv"><div class="wc-num">03</div><div class="wc-title">Cero Emisiones</div><p class="wc-text">100% eléctrico. Sostenible, limpio y eficiente para tu empresa.</p></div>
+  </div>
+</div>
+
+<!-- SECTION 02 -->
+<div class="idx-section">
+  <div class="idx-header"><div class="idx-num">02</div><div class="idx-label">App Movildrive</div></div>
+  <div class="app-grid">
+    <div class="app-img-block" id="aib">
+      <img src="img/scr-img/special.png" alt="App" onerror="this.src='https://images.unsplash.com/photo-1601972602237-8c79241e468b?w=700&q=80'">
+    </div>
+    <div class="app-txt-block" id="atb">
+      <div class="app-title">¡El Servicio<br>que <span>faltaba</span>!</div>
+      <p class="app-desc">Alquila una furgo eléctrica cuando la necesites. Para autónomos, PYMES y particulares. Sin compromisos.</p>
+      <div class="app-links">
+        <a href="https://play.google.com/store/apps/details?id=com.movildriveapp.beta" class="app-lnk">
+          <span class="app-lnk-name">Google Play</span><span class="app-lnk-ico">🤖</span>
+        </a>
+        <a href="https://apps.apple.com/us/app/movildrive/id1475963960?ls=1" class="app-lnk">
+          <span class="app-lnk-name">App Store</span><span class="app-lnk-ico">🍎</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 03 -->
+<div class="idx-section">
+  <div class="idx-header"><div class="idx-num">03</div><div class="idx-label">Propuesta de Valor</div></div>
+  <div class="feat-grid">
+    <div class="feat-cell rv"><span class="feat-ico">👤</span><div class="feat-title">Experiencia de Usuario</div><p class="feat-text">Perfil de administrador o usuario. Empieza sin curva de aprendizaje.</p></div>
+    <div class="feat-cell rv"><span class="feat-ico">🔋</span><div class="feat-title">Tarifas Flexibles</div><p class="feat-text">Shared y Full. Elige el plan según los kilómetros de tu negocio.</p></div>
+    <div class="feat-cell rv"><span class="feat-ico">📡</span><div class="feat-title">Monitoreo Total</div><p class="feat-text">Estado del vehículo en tiempo real. Alertas de mantenimiento incluidas.</p></div>
+  </div>
+</div>
+
+<!-- SECTION 04 — VIDEO -->
+<div class="idx-section">
+  <div class="idx-header"><div class="idx-num">04</div><div class="idx-label">En Acción</div></div>
+  <div class="vid-section rv">
+    <img src="img/scr-img/video.jpg" alt="Video" onerror="this.style.cssText='width:100%;aspect-ratio:21/9;background:#1a1a1a;object-fit:cover'">
+    <div class="vid-over">
+      <a href="https://www.youtube.com/watch?v=7yWOCZb9Yi8" class="vid-cta" target="_blank" rel="noopener">
+        <div class="vid-play-sq"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M8 5L19 12L8 19V5Z"/></svg></div>
+        <span class="vid-cta-label">Ver Vídeo</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="idx-section">
+  <div class="idx-header"><div class="idx-num">05</div><div class="idx-label">Contacto</div></div>
+  <div class="contact-grid">
+    <div class="cc-l rv">
+      <h2 class="cc-title">¿Hablamos<br>de <span>Movilidad</span>?</h2>
+      <p class="cc-sub">Cuéntanos tu proyecto y diseñamos una solución a medida para tu empresa.</p>
+    </div>
+    <div class="cc-r rv">
+      <a href="mailto:hola@movildrive.com" class="cc-email">hola@movildrive.com</a>
+      <p class="cc-note">// Respondemos en &lt; 24h</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">MOVILDRIVE</div>
+  <ul class="f-links">
+    <li><a href="https://movildrive.com/condiciones.html">Términos</a></li>
+    <li><a href="https://movildrive.com/privacidad.html">Privacidad</a></li>
+    <li><a href="https://movildrive.com/contacto.html">Contacto</a></li>
+  </ul>
+  <p class="f-copy">© 2025 MOVILDRIVE</p>
+</footer>
+
+<script>
+(function(){
+  window.addEventListener('scroll',function(){
+    document.getElementById('sp').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';
+  },{passive:true});
+
+  gsap.registerPlugin(ScrollTrigger);
+  window.addEventListener('load',function(){
+    var tl=gsap.timeline({defaults:{ease:'power4.out'}});
+    tl.to('#ht',{opacity:1,duration:.8,delay:.1})
+      .to('#hd',{opacity:1,y:0,duration:.6},'<+0.3')
+      .to('#hc',{opacity:1,duration:.5},'<+0.2');
+  });
+
+  gsap.utils.toArray('.rv').forEach(function(el){
+    gsap.to(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:1,y:0,duration:.65,ease:'power3.out'});
+  });
+  gsap.utils.toArray('.what-cell').forEach(function(c,i){
+    gsap.to(c,{scrollTrigger:{trigger:c,start:'top 87%'},opacity:1,y:0,duration:.6,delay:i*.1,ease:'power3.out'});
+  });
+  gsap.utils.toArray('.feat-cell').forEach(function(c,i){
+    gsap.to(c,{scrollTrigger:{trigger:c,start:'top 87%'},opacity:1,y:0,duration:.6,delay:i*.1,ease:'power3.out'});
+  });
+  gsap.to('#aib',{scrollTrigger:{trigger:'#aib',start:'top 85%'},opacity:1,duration:.8,ease:'power3.out'});
+  gsap.to('#atb',{scrollTrigger:{trigger:'#atb',start:'top 85%'},opacity:1,x:0,duration:.8,delay:.1,ease:'power3.out'});
+})();
+</script>
+</body>
+</html>

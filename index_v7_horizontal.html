@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movildrive — Horizontal Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{--bg:#0A080F;--orange:#FF6B35;--text:#F0EDE8;--muted:rgba(240,237,232,.45);--bdr:rgba(240,237,232,.08);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;cursor:none;}
+
+/* cursor changes per section */
+#cur-dot{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--orange);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background .4s;}
+#cur-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,107,53,.5);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .4s;}
+body.ch #cur-ring{width:56px;height:56px;}
+@media(pointer:coarse){#cur-dot,#cur-ring{display:none;}body{cursor:auto;}}
+
+/* progress */
+#sp{position:fixed;bottom:0;left:0;height:2px;width:0;background:var(--orange);z-index:9999;}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:22px 48px;display:flex;align-items:center;justify-content:space-between;}
+nav.stuck{background:rgba(10,8,15,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--bdr);padding:14px 48px;}
+.n-logo{font-size:1rem;font-weight:800;letter-spacing:.12em;color:var(--orange);text-decoration:none;}
+.n-links{display:flex;gap:24px;list-style:none;}
+.n-links a{font-size:.78rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.n-links a:hover,.n-enter{color:var(--orange)!important;}
+@media(max-width:768px){.n-links{display:none;}nav{padding:14px 20px;}}
+
+/* ── HORIZONTAL CONTAINER ── */
+.h-outer{overflow:hidden;position:relative;}
+.h-track{display:flex;width:500vw;} /* 5 panels × 100vw */
+
+/* ── PANEL BASE ── */
+.panel{
+  width:100vw;height:100vh;
+  flex-shrink:0;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:80px 72px;
+}
+@media(max-width:768px){.panel{padding:80px 24px 48px;}}
+
+/* panel backgrounds */
+.p1{background:linear-gradient(160deg,#0A080F 40%,#1a0f2e);}
+.p2{background:linear-gradient(160deg,#0f1a0a,#0A080F);}
+.p3{background:linear-gradient(160deg,#1a0A08,#0A080F);}
+.p4{background:linear-gradient(160deg,#081a1a,#0A080F);}
+.p5{background:linear-gradient(160deg,#1a1208,#0A080F);}
+
+/* panel big background word */
+.panel-word{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:28vw;font-weight:800;line-height:1;
+  color:rgba(255,255,255,.025);user-select:none;white-space:nowrap;
+  pointer-events:none;
+}
+
+/* panel number */
+.p-num{
+  font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.p-num::before{content:'';display:block;width:24px;height:1px;background:var(--orange);}
+
+/* panel title */
+.p-title{
+  font-size:clamp(3rem,7vw,7rem);font-weight:800;
+  line-height:.95;margin-bottom:24px;max-width:800px;
+}
+.p-title em{font-style:italic;color:var(--orange);}
+
+/* panel text + actions */
+.p-body{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.p-desc{font-size:.95rem;color:var(--muted);max-width:420px;line-height:1.65;}
+.p-ctas{display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0;}
+.btn-o{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--orange);color:#fff;font-weight:700;font-size:.82rem;letter-spacing:.06em;border-radius:100px;text-decoration:none;transition:opacity .2s,transform .2s;}
+.btn-o:hover{opacity:.88;transform:translateY(-2px);color:#fff;}
+.btn-g{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:rgba(255,255,255,.07);border:1px solid var(--bdr);color:var(--text);font-size:.82rem;border-radius:100px;text-decoration:none;transition:border-color .2s;}
+.btn-g:hover{border-color:var(--orange);}
+
+/* parallax image inside panels */
+.p-img{
+  position:absolute;right:0;top:0;bottom:0;width:45%;
+  overflow:hidden;
+}
+.p-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(.8);}
+.p-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--bg) 0%,transparent 40%);}
+@media(max-width:820px){.p-img{display:none;}}
+
+/* panel 3 — app buttons */
+.app-pills{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
+.app-pill{display:flex;align-items:center;gap:10px;padding:12px 18px;background:rgba(255,255,255,.06);border:1px solid var(--bdr);border-radius:10px;text-decoration:none;color:var(--text);transition:border-color .2s;}
+.app-pill:hover{border-color:var(--orange);}
+.app-pill-name{font-weight:700;font-size:.9rem;}
+
+/* panel 5 — contact */
+.contact-email{font-size:clamp(1.5rem,3vw,3rem);font-weight:800;color:var(--orange);text-decoration:none;border-bottom:2px solid rgba(255,107,53,.3);padding-bottom:4px;transition:border-color .2s;}
+.contact-email:hover{border-color:var(--orange);}
+
+/* ── VERTICAL SECTIONS (after horizontal) ── */
+.v-section{padding:100px 72px;border-bottom:1px solid var(--bdr);position:relative;}
+@media(max-width:768px){.v-section{padding:70px 24px;}}
+
+/* scroll indicator */
+.scroll-hint{
+  position:absolute;right:72px;bottom:52px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;
+}
+.sh-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--orange),transparent);animation:sh-anim 2s ease-in-out infinite;}
+@keyframes sh-anim{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(1);transform-origin:bottom;opacity:0}}
+.sh-lbl{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+
+/* section indicator dots */
+.s-dots{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:500;display:flex;flex-direction:column;gap:8px;}
+.s-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background .3s,transform .3s;}
+.s-dot.active{background:var(--orange);transform:scale(1.4);}
+@media(max-width:768px){.s-dots{display:none;}}
+
+/* footer */
+footer{padding:32px 72px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+@media(max-width:768px){footer{padding:24px 20px;}}
+.f-logo{font-weight:800;letter-spacing:.1em;font-size:.9rem;color:var(--orange);}
+.f-copy{font-size:.72rem;color:rgba(240,237,232,.2);}
+</style>
+</head>
+<body>
+<div id="sp"></div>
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<div style="position:fixed;bottom:24px;left:24px;z-index:9000;">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.3);color:var(--orange);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;border-radius:100px;">← Catálogo</a>
+</div>
+
+<!-- section dots -->
+<div class="s-dots" id="dots">
+  <div class="s-dot active"></div>
+  <div class="s-dot"></div>
+  <div class="s-dot"></div>
+  <div class="s-dot"></div>
+  <div class="s-dot"></div>
+</div>
+
+<nav id="nav">
+  <a href="/" class="n-logo">MOVILDRIVE</a>
+  <ul class="n-links">
+    <li><a href="car-sharing.html">Car-Sharing</a></li>
+    <li><a href="fleet-manager-movildrive.html">Flotas</a></li>
+    <li><a href="contact.html">Contacto</a></li>
+    <li><a href="login-fleet-manager.html" class="n-enter">Entrar</a></li>
+  </ul>
+</nav>
+
+<!-- HORIZONTAL SCROLL TRACK -->
+<div class="h-outer" id="hOuter">
+  <div class="h-track" id="hTrack">
+
+    <!-- PANEL 1 — HERO -->
+    <div class="panel p1" id="p1">
+      <div class="panel-word">01</div>
+      <p class="p-num">01 / 05 &nbsp;·&nbsp; Hero</p>
+      <h1 class="p-title">Movilidad<br><em>Eléctrica</em><br>sin límites.</h1>
+      <div class="p-body">
+        <p class="p-desc">El futuro del transporte para PYMES y autónomos ya está aquí. Cero emisiones, máxima flexibilidad.</p>
+        <div class="p-ctas">
+          <a href="car-sharing.html" class="btn-o">Car-Sharing →</a>
+          <a href="fleet-manager-movildrive.html" class="btn-g">Ver Flotas</a>
+        </div>
+      </div>
+      <div class="scroll-hint" id="sh"><div class="sh-line"></div><span class="sh-lbl">Scroll</span></div>
+    </div>
+
+    <!-- PANEL 2 — QUÉ HACEMOS -->
+    <div class="panel p2" id="p2">
+      <div class="panel-word">02</div>
+      <div class="p-img"><img src="img/scr-img/special.png" alt="" onerror="this.src='https://images.unsplash.com/photo-1557804506-669a67965ba0?w=900&q=70'"></div>
+      <p class="p-num">02 / 05 &nbsp;·&nbsp; Soluciones</p>
+      <h2 class="p-title">¿Qué<br>hacemos?</h2>
+      <div class="p-body">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;width:100%;max-width:700px;">
+          <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:16px;"><div style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">01</div><div style="font-weight:700;margin-bottom:6px;font-size:.95rem;">Control Flota</div><div style="font-size:.8rem;color:var(--muted);">SaaS personalizable en tiempo real.</div></div>
+          <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:16px;"><div style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">02</div><div style="font-weight:700;margin-bottom:6px;font-size:.95rem;">App Móvil</div><div style="font-size:.8rem;color:var(--muted);">Android e iOS. Reserva en segundos.</div></div>
+          <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:16px;"><div style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">03</div><div style="font-weight:700;margin-bottom:6px;font-size:.95rem;">0 Emisiones</div><div style="font-size:.8rem;color:var(--muted);">100% eléctrico, limpio y eficiente.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3 — APP -->
+    <div class="panel p3" id="p3">
+      <div class="panel-word">03</div>
+      <p class="p-num">03 / 05 &nbsp;·&nbsp; App</p>
+      <h2 class="p-title">Descarga<br>la <em>App</em></h2>
+      <div class="p-body">
+        <p class="p-desc">Alquila una furgoneta eléctrica cuando la necesites. Para autónomos, PYMES y particulares. Sin compromisos.</p>
+        <div class="app-pills">
+          <a href="https://play.google.com/store/apps/details?id=com.movildriveapp.beta" class="app-pill"><span style="font-size:1.5rem">🤖</span><div><div class="app-pill-name">Google Play</div><div style="font-size:.72rem;color:var(--muted);">Disponible ya</div></div></a>
+          <a href="https://apps.apple.com/us/app/movildrive/id1475963960?ls=1" class="app-pill"><span style="font-size:1.5rem">🍎</span><div><div class="app-pill-name">App Store</div><div style="font-size:.72rem;color:var(--muted);">Disponible ya</div></div></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 4 — STATS -->
+    <div class="panel p4" id="p4">
+      <div class="panel-word">04</div>
+      <p class="p-num">04 / 05 &nbsp;·&nbsp; Números</p>
+      <h2 class="p-title">Resultados<br>que <em>importan.</em></h2>
+      <div class="p-body">
+        <div style="display:flex;gap:52px;flex-wrap:wrap;">
+          <div><div style="font-size:clamp(3rem,7vw,6rem);font-weight:800;color:var(--orange);line-height:1;">500+</div><div style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px;">Usuarios Activos</div></div>
+          <div><div style="font-size:clamp(3rem,7vw,6rem);font-weight:800;color:var(--orange);line-height:1;">0g</div><div style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px;">CO₂</div></div>
+          <div><div style="font-size:clamp(3rem,7vw,6rem);font-weight:800;color:var(--orange);line-height:1;">24/7</div><div style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px;">Soporte</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 5 — CONTACT -->
+    <div class="panel p5" id="p5">
+      <div class="panel-word">05</div>
+      <p class="p-num">05 / 05 &nbsp;·&nbsp; Contacto</p>
+      <h2 class="p-title">¿Hablamos<br>de <em>movilidad</em>?</h2>
+      <div class="p-body">
+        <div>
+          <p class="p-desc" style="margin-bottom:24px;">Escríbenos. Diseñamos la solución perfecta para tu empresa.</p>
+          <a href="mailto:hola@movildrive.com" class="contact-email">hola@movildrive.com</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- end h-outer -->
+
+<footer>
+  <div class="f-logo">MOVILDRIVE</div>
+  <div class="f-copy">© 2025 Movildrive</div>
+</footer>
+
+<script>
+(function(){
+  gsap.registerPlugin(ScrollTrigger);
+
+  window.addEventListener('scroll',function(){
+    var pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
+    document.getElementById('sp').style.width=pct+'%';
+    document.getElementById('nav').classList.toggle('stuck',window.scrollY>60);
+  },{passive:true});
+
+  var cd=document.getElementById('cur-dot'),cr=document.getElementById('cur-ring'),mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+  (function l(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(l);})();
+  document.querySelectorAll('a,button').forEach(function(el){el.addEventListener('mouseenter',function(){document.body.classList.add('ch');});el.addEventListener('mouseleave',function(){document.body.classList.remove('ch');});});
+
+  // show scroll hint
+  window.addEventListener('load',function(){
+    gsap.to('#sh',{opacity:1,duration:.8,delay:1.2});
+  });
+
+  // HORIZONTAL SCROLL
+  var track = document.getElementById('hTrack');
+  var panels = gsap.utils.toArray('.panel');
+  var dots = document.querySelectorAll('.s-dot');
+
+  gsap.to(track, {
+    x: function(){ return -(track.scrollWidth - window.innerWidth); },
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hOuter',
+      pin: true,
+      scrub: 1,
+      end: function(){ return '+=' + (track.scrollWidth - window.innerWidth); },
+      onUpdate: function(self){
+        var idx = Math.round(self.progress * (panels.length - 1));
+        dots.forEach(function(d,i){ d.classList.toggle('active', i === idx); });
+        // hide scroll hint after first movement
+        if(self.progress > 0.05){ gsap.to('#sh',{opacity:0,duration:.3}); }
+      }
+    }
+  });
+
+  // parallax inside panels
+  panels.forEach(function(panel){
+    var img = panel.querySelector('.p-img img');
+    if(img){
+      gsap.to(img,{
+        x: 40,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: panel,
+          containerAnimation: ScrollTrigger.getAll()[0],
+          start: 'left right',
+          end: 'right left',
+          scrub: true
+        }
+      });
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

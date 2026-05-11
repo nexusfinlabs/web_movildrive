@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movildrive — Organic Gradient</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Satoshi:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --bg:#060A10;--bg2:#0A0F1A;
+  --lime:#AEFF00;--violet:#7C3AED;--pink:#FF2D78;--sky:#00D4FF;
+  --text:#F0F0F0;--muted:rgba(240,240,240,.5);
+  --border:rgba(174,255,0,.15);
+  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);line-height:1.7;overflow-x:hidden;cursor:none;}
+
+#cd{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--lime);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+#cr{position:fixed;width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(174,255,0,.5);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s;}
+body.ch #cr{width:60px;height:60px;border-color:rgba(174,255,0,.25);}
+@media(pointer:coarse){#cd,#cr{display:none;}body{cursor:auto;}}
+#sp{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--lime),var(--sky),var(--pink));z-index:9997;border-radius:0 3px 3px 0;}
+
+/* BLOBS */
+.blob-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;animation:blob-float 14s ease-in-out infinite;}
+.b1{width:60vw;height:60vw;background:radial-gradient(circle,var(--lime),transparent 70%);top:-10%;left:-10%;animation-delay:0s;}
+.b2{width:50vw;height:50vw;background:radial-gradient(circle,var(--violet),transparent 70%);bottom:0;right:-10%;animation-delay:-5s;}
+.b3{width:40vw;height:40vw;background:radial-gradient(circle,var(--sky),transparent 70%);top:50%;left:30%;animation-delay:-9s;}
+@keyframes blob-float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(4%,3%) scale(1.05)}66%{transform:translate(-3%,5%) scale(.97)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;}
+nav.stuck{background:rgba(6,10,16,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 48px;}
+.n-brand{font-family:var(--fd);font-size:1.1rem;font-weight:800;letter-spacing:.1em;color:var(--lime);text-decoration:none;}
+.n-links{display:flex;gap:28px;list-style:none;align-items:center;}
+.n-links a{font-size:.82rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;}
+.n-links a:hover{color:var(--lime);}
+.n-pill{background:var(--lime)!important;color:var(--bg)!important;padding:7px 18px!important;border-radius:100px;font-weight:700!important;transition:opacity .2s!important;}
+.n-pill:hover{opacity:.85;}
+@media(max-width:768px){nav{padding:14px 20px;}.n-links{display:none;}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 60px 80px;position:relative;z-index:1;}
+@media(max-width:768px){.hero{padding:100px 22px 60px;}}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(174,255,0,.08);border:1px solid rgba(174,255,0,.2);border-radius:100px;padding:6px 14px;margin-bottom:32px;opacity:0;}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:pulse-dot 2s infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-badge-txt{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);}
+.hero-title{font-family:var(--fd);font-size:clamp(3.2rem,8vw,8rem);font-weight:800;line-height:.95;margin-bottom:28px;opacity:0;}
+.hero-title .ln{display:block;overflow:hidden;}
+.hero-title .wd{display:inline-block;transform:translateY(110%);}
+.hero-title .hi{
+  background:linear-gradient(135deg,var(--lime) 0%,var(--sky) 50%,var(--pink) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200%;animation:grad-shift 5s ease infinite;
+}
+@keyframes grad-shift{0%{background-position:0%}100%{background-position:200%}}
+.hero-sub{font-size:1.1rem;color:var(--muted);max-width:520px;margin-bottom:48px;opacity:0;transform:translateY(16px);}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(14px);}
+.btn-lime{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;background:var(--lime);color:var(--bg);font-family:var(--fd);font-weight:800;font-size:.85rem;letter-spacing:.06em;border-radius:100px;text-decoration:none;transition:transform .2s,box-shadow .2s;}
+.btn-lime:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(174,255,0,.25);color:var(--bg);}
+.btn-glass{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);color:var(--text);font-family:var(--fd);font-weight:600;font-size:.85rem;border-radius:100px;text-decoration:none;transition:border-color .2s,background .2s;}
+.btn-glass:hover{border-color:var(--lime);background:rgba(174,255,0,.06);color:var(--text);}
+.hero-metrics{display:flex;gap:48px;margin-top:64px;padding-top:40px;border-top:1px solid rgba(255,255,255,.07);opacity:0;}
+.metric-val{font-family:var(--fd);font-size:2rem;font-weight:800;color:var(--lime);}
+.metric-lbl{font-size:.78rem;color:var(--muted);margin-top:4px;}
+
+/* SECTION */
+.section{padding:100px 60px;position:relative;z-index:1;}
+@media(max-width:768px){.section{padding:70px 22px;}}
+.eyebrow{font-family:var(--fd);font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);display:block;margin-bottom:14px;}
+.h2{font-family:var(--fd);font-size:clamp(2.2rem,4vw,3.8rem);font-weight:800;line-height:1.1;margin-bottom:16px;}
+.rule{width:40px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--sky));margin-bottom:48px;}
+.rule-c{margin:0 auto 48px;}
+
+/* CARDS */
+.glass-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:900px){.glass-grid{grid-template-columns:1fr;}}
+.glass-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:36px 28px;backdrop-filter:blur(12px);opacity:0;transform:translateY(30px);transition:border-color .3s,background .3s;}
+.glass-card:hover{border-color:rgba(174,255,0,.3);background:rgba(174,255,0,.03);}
+.gc-ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:20px;}
+.ico-lime{background:rgba(174,255,0,.12);border:1px solid rgba(174,255,0,.2);}
+.ico-sky{background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.2);}
+.ico-pink{background:rgba(255,45,120,.12);border:1px solid rgba(255,45,120,.2);}
+.glass-card h4{font-family:var(--fd);font-size:1.05rem;font-weight:700;margin-bottom:10px;}
+.glass-card p{color:var(--muted);font-size:.88rem;line-height:1.75;}
+
+/* BENTO */
+.bento{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:16px;margin-top:60px;}
+@media(max-width:900px){.bento{grid-template-columns:1fr;}}
+.bento-card{border-radius:20px;padding:36px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);opacity:0;transform:translateY(24px);}
+.bento-card.span2{grid-row:span 2;}
+.bento-big{background:linear-gradient(135deg,rgba(174,255,0,.08),rgba(0,212,255,.06));border-color:rgba(174,255,0,.15);}
+.bento-card img{width:100%;border-radius:12px;object-fit:cover;filter:brightness(.6) saturate(.8);}
+.bento-card h3{font-family:var(--fd);font-size:1.4rem;font-weight:800;margin:20px 0 10px;}
+.bento-card p{color:var(--muted);font-size:.88rem;line-height:1.7;}
+.bento-stat .stat-n{font-family:var(--fd);font-size:3rem;font-weight:800;color:var(--lime);}
+.bento-stat .stat-l{font-size:.8rem;color:var(--muted);}
+
+/* APP SPLIT */
+.app-split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:80px;}
+@media(max-width:768px){.app-split{grid-template-columns:1fr;gap:36px;}}
+.app-img{border-radius:24px;overflow:hidden;position:relative;opacity:0;transform:scale(.96);}
+.app-img img{width:100%;object-fit:cover;filter:brightness(.65) saturate(.8);}
+.app-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(174,255,0,.12),rgba(0,212,255,.08));border-radius:24px;border:1px solid rgba(174,255,0,.15);}
+.app-txt{opacity:0;transform:translateY(20px);}
+.app-btns{display:flex;flex-direction:column;gap:12px;margin-top:32px;}
+.app-pill{display:flex;align-items:center;gap:12px;padding:14px 20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;text-decoration:none;color:var(--text);transition:border-color .2s,background .2s;}
+.app-pill:hover{border-color:var(--lime);background:rgba(174,255,0,.05);color:var(--text);}
+.app-pill-ico{font-size:1.6rem;}
+.app-pill-name{font-family:var(--fd);font-weight:700;}
+.app-pill-sub{font-size:.72rem;color:var(--muted);}
+.app-pill-arr{margin-left:auto;color:var(--lime);}
+
+/* VIDEO */
+.vid-block{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:16/9;max-width:900px;margin:60px auto 0;border:1px solid rgba(255,255,255,.08);opacity:0;}
+.vid-block img{width:100%;height:100%;object-fit:cover;filter:brightness(.3) saturate(.5);}
+.vid-over{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.play-pill{display:inline-flex;align-items:center;gap:12px;background:rgba(174,255,0,.12);border:1px solid rgba(174,255,0,.3);backdrop-filter:blur(12px);border-radius:100px;padding:14px 28px;text-decoration:none;color:var(--lime);transition:background .2s;}
+.play-pill:hover{background:rgba(174,255,0,.2);color:var(--lime);}
+.play-ico{width:32px;height:32px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;}
+.play-ico svg path{fill:var(--bg);}
+.play-label{font-family:var(--fd);font-weight:700;font-size:.85rem;letter-spacing:.06em;}
+
+/* CONTACT */
+.contact-card{background:linear-gradient(135deg,rgba(174,255,0,.06),rgba(0,212,255,.04));border:1px solid rgba(174,255,0,.15);border-radius:28px;padding:80px 60px;text-align:center;opacity:0;transform:translateY(24px);}
+@media(max-width:768px){.contact-card{padding:48px 24px;}}
+.contact-card h2{font-family:var(--fd);font-size:clamp(2.2rem,5vw,4rem);font-weight:800;margin-bottom:16px;}
+.contact-card p{color:var(--muted);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;}
+.email-pill{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--lime);color:var(--bg);font-family:var(--fd);font-weight:800;border-radius:100px;text-decoration:none;font-size:.9rem;transition:opacity .2s,transform .2s;}
+.email-pill:hover{opacity:.88;transform:translateY(-2px);color:var(--bg);}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(255,255,255,.07);padding:48px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;position:relative;z-index:1;}
+@media(max-width:768px){footer{padding:36px 22px;flex-direction:column;text-align:center;}}
+.f-brand{font-family:var(--fd);font-size:1.2rem;font-weight:800;color:var(--lime);}
+.f-nav{display:flex;gap:20px;list-style:none;}
+.f-nav a{font-size:.78rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.f-nav a:hover{color:var(--lime);}
+.f-copy{font-size:.72rem;color:rgba(240,240,240,.2);}
+</style>
+</head>
+<body>
+<div class="blob-wrap"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div id="sp"></div>
+<div id="cd"></div>
+<div id="cr"></div>
+
+<nav id="nav">
+  <a href="/" class="n-brand">MOVILDRIVE</a>
+  <ul class="n-links">
+    <li><a href="car-sharing.html">Car-Sharing</a></li>
+    <li><a href="fleet-manager-movildrive.html">Flotas</a></li>
+    <li><a href="contact.html">Contacto</a></li>
+    <li><a href="login-fleet-manager.html" class="n-pill">Entrar</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge" id="hb"><span class="hero-badge-dot"></span><span class="hero-badge-txt">Movilidad 100% Eléctrica</span></div>
+  <h1 class="hero-title" id="ht">
+    <span class="ln"><span class="wd">Mueve tu</span></span>
+    <span class="ln"><span class="wd hi">Empresa</span></span>
+    <span class="ln"><span class="wd">sin límites</span></span>
+  </h1>
+  <p class="hero-sub" id="hs">Alquila vehículos eléctricos cuando los necesites. Cero emisiones, máxima flexibilidad para PYMES y autónomos.</p>
+  <div class="hero-actions" id="ha">
+    <a href="car-sharing.html" class="btn-lime">Car-Sharing →</a>
+    <a href="fleet-manager-movildrive.html" class="btn-glass">Ver Flotas</a>
+  </div>
+  <div class="hero-metrics" id="hm">
+    <div><div class="metric-val">500+</div><div class="metric-lbl">Usuarios activos</div></div>
+    <div><div class="metric-val">0g</div><div class="metric-lbl">Emisiones CO₂</div></div>
+    <div><div class="metric-val">24/7</div><div class="metric-lbl">Soporte</div></div>
+  </div>
+</section>
+
+<!-- WHAT -->
+<section class="section">
+  <div style="text-align:center;">
+    <span class="eyebrow rv">Nuestras Soluciones</span>
+    <h2 class="h2 rv">¿Qué hacemos?</h2>
+    <div class="rule rule-c"></div>
+  </div>
+  <div class="glass-grid">
+    <div class="glass-card"><div class="gc-ico ico-lime">🚐</div><h4>Control de Flota</h4><p>Plataforma SaaS completamente personalizable para gestionar tu flota en tiempo real.</p></div>
+    <div class="glass-card"><div class="gc-ico ico-sky">📱</div><h4>App Móvil</h4><p>Android e iOS. Reserva, usa y gestiona tus vehículos desde el móvil en segundos.</p></div>
+    <div class="glass-card"><div class="gc-ico ico-pink">⚡</div><h4>Cero Emisiones</h4><p>100% eléctrico. Sostenibilidad sin sacrificar rendimiento ni comodidad.</p></div>
+  </div>
+</section>
+
+<!-- APP SECTION -->
+<section class="section" style="padding-top:0;">
+  <div class="app-split">
+    <div class="app-img" id="aimg">
+      <img src="img/scr-img/special.png" alt="App" onerror="this.src='https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=700&q=80'">
+    </div>
+    <div class="app-txt" id="atxt">
+      <span class="eyebrow">Descarga la App</span>
+      <h2 class="h2">¡El Servicio de Movilidad que faltaba!</h2>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:0;">Alquila una furgo eléctrica si eres autónomo o particular y úsala el tiempo que necesites.</p>
+      <div class="app-btns">
+        <a href="https://play.google.com/store/apps/details?id=com.movildriveapp.beta" class="app-pill">
+          <span class="app-pill-ico">🤖</span><div><span class="app-pill-name" style="display:block;">Google Play</span><span class="app-pill-sub">Disponible ya</span></div>
+          <span class="app-pill-arr">↗</span>
+        </a>
+        <a href="https://apps.apple.com/us/app/movildrive/id1475963960?ls=1" class="app-pill">
+          <span class="app-pill-ico">🍎</span><div><span class="app-pill-name" style="display:block;">App Store</span><span class="app-pill-sub">Disponible ya</span></div>
+          <span class="app-pill-arr">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="section" style="text-align:center;padding-top:0;">
+  <span class="eyebrow rv">En Acción</span>
+  <h2 class="h2 rv">Mira cómo funciona</h2>
+  <div class="rule rule-c"></div>
+  <div class="vid-block rv">
+    <img src="img/scr-img/video.jpg" alt="Video" onerror="this.style.cssText='width:100%;height:100%;background:#080F1A;object-fit:cover'">
+    <div class="vid-over">
+      <a href="https://www.youtube.com/watch?v=7yWOCZb9Yi8" class="play-pill" target="_blank" rel="noopener">
+        <div class="play-ico"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M8 5L19 12L8 19V5Z"/></svg></div>
+        <span class="play-label">Ver vídeo</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section">
+  <div class="contact-card rv">
+    <span class="eyebrow" style="justify-content:center;display:block;">Contacto</span>
+    <h2>¿Hablamos?</h2>
+    <p>Cuéntanos tu proyecto y diseñamos la solución de movilidad perfecta para tu empresa.</p>
+    <a href="mailto:hola@movildrive.com" class="email-pill">✉ hola@movildrive.com</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-brand">MOVILDRIVE</div>
+  <ul class="f-nav">
+    <li><a href="https://movildrive.com/condiciones.html">Términos</a></li>
+    <li><a href="https://movildrive.com/privacidad.html">Privacidad</a></li>
+    <li><a href="https://movildrive.com/contacto.html">Contacto</a></li>
+  </ul>
+  <p class="f-copy">© 2025 Movildrive</p>
+</footer>
+
+<script>
+(function(){
+  window.addEventListener('scroll',function(){
+    document.getElementById('sp').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';
+    document.getElementById('nav').classList.toggle('stuck',window.scrollY>60);
+  },{passive:true});
+
+  var cd=document.getElementById('cd'),cr=document.getElementById('cr'),mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+  (function l(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(l);})();
+  document.querySelectorAll('a,button').forEach(function(el){el.addEventListener('mouseenter',function(){document.body.classList.add('ch');});el.addEventListener('mouseleave',function(){document.body.classList.remove('ch');});});
+
+  gsap.registerPlugin(ScrollTrigger);
+  window.addEventListener('load',function(){
+    var tl=gsap.timeline({defaults:{ease:'power4.out'}});
+    tl.to('#hb',{opacity:1,y:0,duration:.6,delay:.1})
+      .to('#ht',{opacity:1,duration:0},'<')
+      .to('#ht .wd',{y:0,duration:.9,stagger:.09},'<+0.1')
+      .to('#hs',{opacity:1,y:0,duration:.7},'<+0.45')
+      .to('#ha',{opacity:1,y:0,duration:.6},'<+0.15')
+      .to('#hm',{opacity:1,duration:.6},'<+0.2');
+  });
+
+  gsap.utils.toArray('.rv').forEach(function(el){
+    gsap.to(el,{scrollTrigger:{trigger:el,start:'top 88%'},opacity:1,y:0,duration:.72,ease:'power3.out'});
+  });
+  gsap.utils.toArray('.glass-card').forEach(function(c,i){
+    gsap.to(c,{scrollTrigger:{trigger:c,start:'top 86%'},opacity:1,y:0,duration:.7,delay:i*.13,ease:'power3.out'});
+  });
+  gsap.to('#aimg',{scrollTrigger:{trigger:'#aimg',start:'top 85%'},opacity:1,scale:1,duration:.9,ease:'power3.out'});
+  gsap.to('#atxt',{scrollTrigger:{trigger:'#atxt',start:'top 85%'},opacity:1,y:0,duration:.8,delay:.15,ease:'power3.out'});
+  gsap.utils.toArray('.bento-card').forEach(function(c,i){
+    gsap.to(c,{scrollTrigger:{trigger:c,start:'top 86%'},opacity:1,y:0,duration:.7,delay:i*.1,ease:'power3.out'});
+  });
+})();
+</script>
+</body>
+</html>

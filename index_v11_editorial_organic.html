@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movildrive — Editorial Organic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.3/dist/lenis.min.js"></script>
+<style>
+:root{
+  --bg:#F4F1EC;--dark:#0A0A0A;
+  --blue:#0040FF;--coral:#FF5A2C;--lime:#00B85C;
+  --muted:#8A8680;--bdr:rgba(10,10,10,.1);
+  --fd:'DM Serif Display',serif;--fb:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{background:var(--bg);color:var(--dark);font-family:var(--fb);font-weight:300;overflow-x:hidden;cursor:none;line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+
+/* ── ORGANIC BLOBS (v4 → softened for cream) ── */
+.blob-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.22;animation:blob-float 18s ease-in-out infinite;}
+.b1{width:55vw;height:55vw;background:radial-gradient(circle,var(--blue),transparent 70%);top:-15%;left:-12%;animation-delay:0s;opacity:.14;}
+.b2{width:48vw;height:48vw;background:radial-gradient(circle,var(--coral),transparent 70%);bottom:-10%;right:-12%;animation-delay:-6s;opacity:.18;}
+.b3{width:38vw;height:38vw;background:radial-gradient(circle,var(--lime),transparent 70%);top:48%;left:32%;animation-delay:-11s;opacity:.12;}
+@keyframes blob-float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(4%,3%) scale(1.06)}66%{transform:translate(-3%,5%) scale(.96)}}
+
+/* ── CURSOR ── */
+#cur{position:fixed;width:6px;height:6px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;}
+#cur-r{position:fixed;width:32px;height:32px;border:1.5px solid rgba(0,64,255,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s;}
+body.ch #cur-r{width:60px;height:60px;border-color:rgba(255,90,44,.5);}
+@media(pointer:coarse){#cur,#cur-r{display:none;}body{cursor:auto;}}
+
+/* progress bar */
+#sp{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--blue),var(--coral));z-index:9999;}
+
+/* section dots (v7) */
+.s-dots{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:500;display:flex;flex-direction:column;gap:10px;}
+.s-dot{width:6px;height:6px;border-radius:50%;background:rgba(10,10,10,.18);transition:background .3s,transform .3s;}
+.s-dot.active{background:var(--blue);transform:scale(1.55);}
+@media(max-width:768px){.s-dots{display:none;}}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:22px 52px;display:flex;align-items:center;justify-content:space-between;mix-blend-mode:multiply;transition:padding .3s,background .3s;}
+nav.stuck{mix-blend-mode:normal;background:rgba(244,241,236,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--bdr);padding:14px 52px;}
+.n-logo{font-family:var(--fd);font-size:1.05rem;letter-spacing:.06em;color:var(--dark);}
+.n-links{display:flex;gap:28px;list-style:none;align-items:center;}
+.n-links a{font-size:.78rem;letter-spacing:.06em;color:var(--muted);transition:color .2s;}
+.n-links a:hover{color:var(--dark);}
+.n-enter{color:var(--blue)!important;border-bottom:1px solid var(--blue);padding-bottom:2px;}
+@media(max-width:768px){nav{padding:16px 20px;}.n-links{display:none;}}
+
+/* ── HERO ── */
+.hero{min-height:100vh;padding:140px 52px 80px;display:flex;flex-direction:column;justify-content:flex-end;border-bottom:1px solid var(--bdr);position:relative;z-index:1;overflow:hidden;}
+@media(max-width:768px){.hero{padding:110px 20px 60px;}}
+.hero-eyebrow{
+  font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--blue);
+  margin-bottom:32px;display:flex;align-items:center;gap:14px;opacity:0;
+}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--blue);}
+.hero-title{
+  font-family:var(--fd);
+  font-size:clamp(4rem,11vw,11rem);
+  line-height:.9;letter-spacing:-.02em;font-weight:400;
+}
+.hero-title .ln{display:block;overflow:hidden;}
+.hero-title .wd{display:inline-block;transform:translateY(108%);}
+.hero-title .hi{
+  font-style:italic;
+  background:linear-gradient(110deg,var(--blue) 0%,var(--coral) 55%,var(--lime) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:220%;animation:grad-shift 7s ease infinite;
+}
+@keyframes grad-shift{0%{background-position:0%}100%{background-position:220%}}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-top:52px;flex-wrap:wrap;}
+.hero-desc{font-size:1rem;color:var(--muted);max-width:380px;line-height:1.7;opacity:0;transform:translateY(14px);}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(14px);}
+.btn-dark{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--dark);color:var(--bg);font-size:.8rem;font-weight:500;letter-spacing:.06em;border-radius:2px;transition:transform .2s,opacity .2s;}
+.btn-dark:hover{opacity:.9;transform:translateY(-2px);color:var(--bg);}
+.btn-line{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;border:1px solid rgba(10,10,10,.25);color:var(--dark);font-size:.8rem;letter-spacing:.06em;border-radius:2px;transition:border-color .2s,color .2s;}
+.btn-line:hover{border-color:var(--blue);color:var(--blue);}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);position:relative;z-index:1;background:var(--bg);}
+@media(max-width:640px){.stats-row{grid-template-columns:1fr;}}
+.stat-cell{border-right:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:56px 40px;text-align:center;}
+.stat-cell:last-child{border-right:none;}
+@media(max-width:640px){.stat-cell{border-right:none;}}
+.stat-n{font-family:var(--fd);font-size:clamp(3rem,6vw,5rem);color:var(--blue);line-height:1;font-weight:400;}
+.stat-l{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px;}
+
+/* ── SECTION BASE ── */
+.section{padding:120px 52px;border-bottom:1px solid var(--bdr);position:relative;z-index:1;overflow:hidden;}
+@media(max-width:768px){.section{padding:80px 20px;}}
+
+/* big numeric watermark per section (v7 idea) */
+.bg-num{
+  position:absolute;font-family:var(--fd);font-size:32vw;font-weight:400;line-height:.9;
+  color:rgba(10,10,10,.04);user-select:none;pointer-events:none;
+  top:50%;transform:translateY(-50%);right:-2vw;
+}
+
+/* ── WHAT (v6 grid + v7 numbering vibes) ── */
+.what-header{display:flex;align-items:baseline;gap:24px;margin-bottom:60px;flex-wrap:wrap;}
+.what-num{font-family:var(--fd);font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--blue);}
+.what-num::before{content:'';display:inline-block;width:28px;height:1px;background:var(--blue);vertical-align:middle;margin-right:14px;}
+.what-title-lbl{font-family:var(--fd);font-size:clamp(2rem,4vw,3.4rem);font-style:italic;line-height:1.05;}
+.what-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;position:relative;z-index:1;}
+@media(max-width:820px){.what-grid{grid-template-columns:1fr;gap:36px;}}
+.what-item{border-top:1px solid rgba(10,10,10,.12);padding-top:28px;}
+.wi-num{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--coral);margin-bottom:14px;font-weight:500;}
+.wi-title{font-family:var(--fd);font-size:1.65rem;margin-bottom:12px;line-height:1.15;}
+.wi-text{font-size:.9rem;color:var(--muted);line-height:1.75;}
+
+/* ── MANIFESTO (dark, v6 + organic blob accent v4) ── */
+.manifesto{padding:100px 52px;background:var(--dark);color:var(--bg);position:relative;z-index:1;overflow:hidden;}
+@media(max-width:768px){.manifesto{padding:70px 20px;}}
+.manifesto::before{
+  content:'';position:absolute;width:60vw;height:60vw;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,64,255,.35),transparent 65%);
+  filter:blur(80px);top:-20%;right:-20%;animation:blob-float 20s ease-in-out infinite;
+}
+.manifesto::after{
+  content:'';position:absolute;width:45vw;height:45vw;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,90,44,.28),transparent 65%);
+  filter:blur(80px);bottom:-25%;left:-15%;animation:blob-float 24s ease-in-out infinite reverse;
+}
+.manifesto-eyebrow{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);margin-bottom:28px;display:flex;align-items:center;gap:14px;position:relative;z-index:1;}
+.manifesto-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--coral);}
+.manifesto-text{
+  font-family:var(--fd);
+  font-size:clamp(2rem,5vw,4.5rem);
+  line-height:1.18;max-width:1000px;font-weight:400;position:relative;z-index:1;
+}
+.manifesto-text em{font-style:italic;color:rgba(255,255,255,.4);}
+.manifesto-text .accent{font-style:italic;color:var(--coral);}
+
+/* ── APP SPLIT (v6) ── */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:72vh;position:relative;z-index:1;}
+@media(max-width:820px){.split{grid-template-columns:1fr;min-height:auto;}}
+.split-img{position:relative;overflow:hidden;background:#1a1a1a;}
+.split-img img{width:100%;height:100%;object-fit:cover;min-height:440px;filter:grayscale(15%) contrast(1.05);transition:transform 8s ease;}
+.split-img:hover img{transform:scale(1.04);}
+.split-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,64,255,.18),transparent 60%);pointer-events:none;
+}
+.split-txt{padding:80px 52px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--bdr);position:relative;}
+@media(max-width:820px){.split-txt{padding:56px 20px;border-left:none;border-top:1px solid var(--bdr);}}
+.split-eyebrow{font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--blue);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.split-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--blue);}
+.split-h{font-family:var(--fd);font-size:clamp(1.9rem,3.5vw,3.2rem);line-height:1.1;margin-bottom:22px;font-weight:400;}
+.split-h em{font-style:italic;color:var(--blue);}
+.split-p{font-size:.95rem;color:var(--muted);margin-bottom:36px;line-height:1.7;}
+.app-row{display:flex;flex-direction:column;}
+.app-lnk{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--bdr);transition:color .2s,padding-left .25s;}
+.app-lnk:hover{color:var(--blue);padding-left:8px;}
+.app-lnk-left{display:flex;align-items:center;gap:14px;}
+.app-lnk-name{font-family:var(--fd);font-size:1.15rem;}
+.app-lnk-sub{font-size:.7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.app-lnk-arr{color:var(--blue);font-size:1.1rem;}
+
+/* ── VIDEO ── */
+.vid-wrap{position:relative;overflow:hidden;border-bottom:1px solid var(--bdr);z-index:1;}
+.vid-wrap img{width:100%;aspect-ratio:21/9;object-fit:cover;filter:grayscale(40%) contrast(1.1);display:block;}
+@media(max-width:768px){.vid-wrap img{aspect-ratio:16/9;}}
+.vid-over{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(to bottom,transparent 50%,rgba(10,10,10,.35));}
+.vid-btn{display:flex;align-items:center;gap:14px;background:rgba(244,241,236,.94);backdrop-filter:blur(8px);padding:16px 30px;border-radius:100px;color:var(--dark);transition:transform .25s,background .25s;}
+.vid-btn:hover{background:#fff;transform:scale(1.04);color:var(--dark);}
+.vid-play{width:36px;height:36px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.vid-play svg path{fill:#fff;}
+.vid-label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;}
+
+/* ── CONTACT ── */
+.contact{display:grid;grid-template-columns:1fr 1fr;position:relative;z-index:1;}
+@media(max-width:820px){.contact{grid-template-columns:1fr;}}
+.cc-l{padding:90px 52px;border-right:1px solid var(--bdr);}
+.cc-r{padding:90px 52px;display:flex;flex-direction:column;justify-content:center;}
+@media(max-width:820px){.cc-l,.cc-r{padding:60px 20px;}.cc-l{border-right:none;border-bottom:1px solid var(--bdr);}}
+.cc-h{font-family:var(--fd);font-size:clamp(2.4rem,5.5vw,4.8rem);line-height:.98;margin-bottom:18px;font-weight:400;}
+.cc-h em{font-style:italic;color:var(--blue);}
+.cc-p{font-size:.9rem;color:var(--muted);max-width:380px;}
+.cc-email{font-family:var(--fd);font-size:clamp(1.3rem,2.5vw,2.2rem);color:var(--blue);border-bottom:1px solid rgba(0,64,255,.3);padding-bottom:6px;display:inline-block;transition:border-color .25s,letter-spacing .25s;}
+.cc-email:hover{border-color:var(--blue);letter-spacing:.01em;color:var(--blue);}
+.cc-note{font-size:.75rem;color:var(--muted);margin-top:18px;letter-spacing:.06em;}
+
+/* ── FOOTER ── */
+footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;padding:32px 52px;border-top:1px solid var(--bdr);position:relative;z-index:1;background:var(--bg);}
+@media(max-width:768px){footer{padding:24px 20px;text-align:center;}}
+.f-logo{font-family:var(--fd);font-size:1rem;letter-spacing:.06em;}
+.f-right{display:flex;gap:22px;list-style:none;flex-wrap:wrap;}
+.f-right a{font-size:.74rem;color:var(--muted);transition:color .2s;}
+.f-right a:hover{color:var(--blue);}
+.f-copy{font-size:.72rem;color:rgba(10,10,10,.3);}
+
+/* helpers */
+.rv{will-change:clip-path,opacity;}
+</style>
+</head>
+<body>
+<div class="blob-wrap"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div id="sp"></div>
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<div style="position:fixed;bottom:24px;left:24px;z-index:9000;">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--dark);color:var(--bg);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;border-radius:2px;font-family:var(--fb);">← Catálogo</a>
+</div>
+
+<div class="s-dots" id="dots">
+  <div class="s-dot active" data-target=".hero"></div>
+  <div class="s-dot" data-target=".stats-row"></div>
+  <div class="s-dot" data-target="#what"></div>
+  <div class="s-dot" data-target=".manifesto"></div>
+  <div class="s-dot" data-target=".split"></div>
+  <div class="s-dot" data-target=".vid-wrap"></div>
+  <div class="s-dot" data-target=".contact"></div>
+</div>
+
+<nav id="nav">
+  <a href="/" class="n-logo">Movildrive</a>
+  <ul class="n-links">
+    <li><a href="car-sharing.html">Car-Sharing</a></li>
+    <li><a href="fleet-manager-movildrive.html">Flotas</a></li>
+    <li><a href="contact.html">Contacto</a></li>
+    <li><a href="login-fleet-manager.html" class="n-enter">Entrar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow" id="heyebrow">Movilidad · Sostenibilidad · 2025</div>
+  <h1 class="hero-title" id="htitle">
+    <span class="ln"><span class="wd">Mueve tu</span></span>
+    <span class="ln"><span class="wd hi">Empresa</span></span>
+    <span class="ln"><span class="wd">sin límites.</span></span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc" id="hdesc">El futuro del transporte eléctrico para PYMES y autónomos. Alquila vehículos cuando los necesites — flexible, sostenible, sin emisiones.</p>
+    <div class="hero-ctas" id="hctas">
+      <a href="car-sharing.html" class="btn-dark">Car-Sharing →</a>
+      <a href="fleet-manager-movildrive.html" class="btn-line">Gestión de Flotas</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-cell"><div class="stat-n" data-count="500" data-s="+">0</div><div class="stat-l">Usuarios Activos</div></div>
+  <div class="stat-cell"><div class="stat-n">0<span style="font-size:.6em;">g</span></div><div class="stat-l">Emisiones CO₂</div></div>
+  <div class="stat-cell"><div class="stat-n" data-count="24" data-s="/7">0</div><div class="stat-l">Soporte</div></div>
+</div>
+
+<!-- WHAT WE DO -->
+<section class="section" id="what">
+  <span class="bg-num">01</span>
+  <div class="what-header">
+    <span class="what-num">01 / 04 &nbsp;·&nbsp; Soluciones</span>
+    <span class="what-title-lbl">¿Qué hacemos?</span>
+  </div>
+  <div class="what-grid">
+    <div class="what-item rv"><div class="wi-num">— 01 Plataforma</div><div class="wi-title">Control de Flota</div><p class="wi-text">SaaS completamente personalizable. Monitoriza tus vehículos en tiempo real y optimiza cada ruta con datos en directo.</p></div>
+    <div class="what-item rv"><div class="wi-num">— 02 Móvil</div><div class="wi-title">App nativa</div><p class="wi-text">Android e iOS. Reserva, abre y devuelve tus vehículos desde el móvil en segundos. Sin llaves, sin papeles.</p></div>
+    <div class="what-item rv"><div class="wi-num">— 03 Energía</div><div class="wi-title">Cero Emisiones</div><p class="wi-text">100% eléctrico. Sostenibilidad sin sacrificar rendimiento, autonomía ni comodidad para tu empresa.</p></div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<div class="manifesto rv">
+  <div class="manifesto-eyebrow">02 / 04 &nbsp;·&nbsp; Manifiesto</div>
+  <p class="manifesto-text">El transporte urbano cambia. <em>Las ciudades lo exigen.</em> El planeta lo necesita. <span class="accent">Movildrive</span> es la respuesta.</p>
+</div>
+
+<!-- APP SPLIT -->
+<div class="split">
+  <div class="split-img" id="simg"><img src="img/scr-img/special.png" alt="App Movildrive" onerror="this.src='https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=900&q=80'"></div>
+  <div class="split-txt" id="stxt">
+    <span class="bg-num" style="right:-8vw;font-size:24vw;">03</span>
+    <div class="split-eyebrow">03 / 04 &nbsp;·&nbsp; Descarga</div>
+    <h2 class="split-h">El servicio de<br>movilidad <em>que faltaba.</em></h2>
+    <p class="split-p">Alquila una furgoneta eléctrica cuando la necesites. Para autónomos, PYMES y particulares. Sin compromisos a largo plazo, sin sorpresas.</p>
+    <div class="app-row">
+      <a href="https://play.google.com/store/apps/details?id=com.movildriveapp.beta" class="app-lnk">
+        <div class="app-lnk-left"><span style="font-size:1.4rem;">🤖</span><div><div class="app-lnk-name">Google Play</div><div class="app-lnk-sub">Disponible</div></div></div>
+        <span class="app-lnk-arr">→</span>
+      </a>
+      <a href="https://apps.apple.com/us/app/movildrive/id1475963960?ls=1" class="app-lnk">
+        <div class="app-lnk-left"><span style="font-size:1.4rem;">🍎</span><div><div class="app-lnk-name">App Store</div><div class="app-lnk-sub">Disponible</div></div></div>
+        <span class="app-lnk-arr">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO -->
+<div class="vid-wrap rv">
+  <img src="img/scr-img/video.jpg" alt="Vídeo Movildrive" onerror="this.style.cssText='width:100%;aspect-ratio:21/9;background:#1a1a1a;object-fit:cover;display:block'">
+  <div class="vid-over">
+    <a href="https://www.youtube.com/watch?v=7yWOCZb9Yi8" class="vid-btn" target="_blank" rel="noopener">
+      <div class="vid-play"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M8 5L19 12L8 19V5Z"/></svg></div>
+      <span class="vid-label">Ver vídeo</span>
+    </a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact">
+  <div class="cc-l rv">
+    <span class="bg-num" style="right:auto;left:-4vw;font-size:24vw;">04</span>
+    <div style="font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);margin-bottom:24px;display:flex;align-items:center;gap:12px;"><span style="display:block;width:24px;height:1px;background:var(--coral);"></span>04 / 04 · Contacto</div>
+    <h2 class="cc-h">¿Hablamos<br><em>de movilidad?</em></h2>
+    <p class="cc-p">Cuéntanos tu proyecto y diseñamos la solución de transporte eléctrico perfecta para tu empresa.</p>
+  </div>
+  <div class="cc-r rv">
+    <a href="mailto:hola@movildrive.com" class="cc-email">hola@movildrive.com</a>
+    <p class="cc-note">// Respondemos en menos de 24h</p>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">Movildrive</div>
+  <ul class="f-right">
+    <li><a href="https://movildrive.com/condiciones.html">Términos</a></li>
+    <li><a href="https://movildrive.com/privacidad.html">Privacidad</a></li>
+    <li><a href="https://movildrive.com/contacto.html">Contacto</a></li>
+  </ul>
+  <div class="f-copy">© 2025 Movildrive — Editorial Organic</div>
+</footer>
+
+<script>
+(function(){
+  // Lenis smooth scroll (v6)
+  var lenis = new Lenis({ autoRaf: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
+  gsap.ticker.lagSmoothing(0);
+
+  // progress + nav
+  window.addEventListener('scroll',function(){
+    var pct = window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
+    document.getElementById('sp').style.width = pct+'%';
+    document.getElementById('nav').classList.toggle('stuck', window.scrollY>60);
+  },{passive:true});
+
+  // cursor
+  var c=document.getElementById('cur'),r=document.getElementById('cur-r'),mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;c.style.left=mx+'px';c.style.top=my+'px';});
+  (function l(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(l);})();
+  document.querySelectorAll('a,button').forEach(function(el){
+    el.addEventListener('mouseenter',function(){document.body.classList.add('ch');});
+    el.addEventListener('mouseleave',function(){document.body.classList.remove('ch');});
+  });
+
+  // GSAP
+  gsap.registerPlugin(ScrollTrigger);
+
+  // hero entry
+  window.addEventListener('load',function(){
+    var tl = gsap.timeline({defaults:{ease:'power4.out'}});
+    tl.to('#heyebrow',{opacity:1,duration:.6,delay:.2})
+      .to('#htitle .wd',{y:0,duration:1.05,stagger:.13},'<+0.05')
+      .to('#hdesc',{opacity:1,y:0,duration:.7},'<+0.45')
+      .to('#hctas',{opacity:1,y:0,duration:.6},'<+0.15');
+  });
+
+  // clip-reveal (v6)
+  gsap.utils.toArray('.rv').forEach(function(el){
+    gsap.fromTo(el,
+      {clipPath:'inset(0 100% 0 0)',opacity:1},
+      {scrollTrigger:{trigger:el,start:'top 87%'},
+       clipPath:'inset(0 0% 0 0)',duration:.95,ease:'power3.inOut'});
+  });
+
+  // what items stagger
+  gsap.utils.toArray('.what-item').forEach(function(el,i){
+    gsap.from(el,{scrollTrigger:{trigger:el,start:'top 88%'},
+      opacity:0,y:24,duration:.75,delay:i*.12,ease:'power3.out'});
+  });
+
+  // split parallax
+  gsap.from('#simg img',{scrollTrigger:{trigger:'#simg',start:'top bottom',end:'bottom top',scrub:true},y:-60,ease:'none'});
+  gsap.from('#stxt',{x:30,opacity:0,scrollTrigger:{trigger:'#stxt',start:'top 85%'},duration:.9,delay:.12,ease:'power3.out'});
+
+  // counter
+  gsap.utils.toArray('.stat-n[data-count]').forEach(function(el){
+    ScrollTrigger.create({trigger:el,start:'top 90%',once:true,onEnter:function(){
+      var t=parseInt(el.getAttribute('data-count')),s=el.getAttribute('data-s')||'',obj={v:0};
+      gsap.to(obj,{v:t,duration:2,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(obj.v)+s;}});
+    }});
+  });
+
+  // section dots active state
+  var dots = document.querySelectorAll('.s-dot');
+  dots.forEach(function(dot){
+    var sel = dot.getAttribute('data-target');
+    var target = document.querySelector(sel);
+    if(!target) return;
+    ScrollTrigger.create({
+      trigger:target, start:'top 55%', end:'bottom 45%',
+      onToggle:function(self){ if(self.isActive){
+        dots.forEach(function(d){d.classList.remove('active');});
+        dot.classList.add('active');
+      }}
+    });
+    dot.addEventListener('click',function(){ lenis.scrollTo(target,{offset:-40}); });
+  });
+
+  // bg numbers parallax
+  gsap.utils.toArray('.bg-num').forEach(function(el){
+    gsap.to(el,{y:-80,ease:'none',
+      scrollTrigger:{trigger:el,start:'top bottom',end:'bottom top',scrub:true}});
+  });
+})();
+</script>
+</body>
+</html>
