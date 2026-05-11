@@ -3,342 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Movildrive — Design Lab</title>
+<title>Movildrive — Movilidad eléctrica para empresas</title>
+<meta name="description" content="El futuro del transporte eléctrico para PYMES y autónomos. Alquila vehículos cuando los necesites — flexible, sostenible, sin emisiones.">
+<meta property="og:title" content="Movildrive — Movilidad eléctrica para empresas">
+<meta property="og:description" content="Car-Sharing y gestión de flotas 100% eléctrico.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.movildrive.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#07090F;--bg2:#0C0F1A;
-  --c:#05E2FF;--c2:#00FF88;
-  --text:#E8EAED;--muted:rgba(232,234,237,.48);
-  --bdr:rgba(5,226,255,.1);
-  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:16px;}
-body{background:var(--bg);color:var(--text);font-family:var(--fb);min-height:100vh;overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
-
-/* subtle dot grid */
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:radial-gradient(rgba(5,226,255,.07) 1px,transparent 1px);
-  background-size:32px 32px;}
-
-/* ── HEADER ─────────────────────────────── */
-.hdr{position:relative;z-index:2;padding:52px 56px 44px;border-bottom:1px solid var(--bdr);}
-.hdr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;}
-.brand{font-family:var(--fd);font-size:.78rem;font-weight:800;letter-spacing:.22em;color:var(--c);margin-bottom:20px;}
-.hdr-h1{font-family:var(--fd);font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:.95;
-  background:linear-gradient(110deg,var(--text) 50%,rgba(232,234,237,.3));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hdr-sub{margin-top:14px;font-size:.9rem;color:var(--muted);max-width:520px;line-height:1.6;}
-.hdr-meta{text-align:right;flex-shrink:0;}
-.hdr-num{font-family:var(--fd);font-size:4.5rem;font-weight:800;line-height:1;
-  background:linear-gradient(110deg,var(--c),var(--c2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hdr-num-lbl{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
-@media(max-width:640px){.hdr{padding:36px 20px 28px;}.hdr-meta{display:none;}}
-
-/* ── GRID ────────────────────────────────── */
-.grid{
-  position:relative;z-index:2;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
-  border-bottom:1px solid var(--bdr);
-}
-@media(max-width:640px){.grid{grid-template-columns:1fr;}}
-
-/* column & row gaps replaced by 1px borders */
-.card{
-  border-right:1px solid var(--bdr);
-  border-bottom:1px solid var(--bdr);
-}
-/* ── CARD ────────────────────────────────── */
-.card{
-  display:flex;flex-direction:column;
-  background:var(--bg);
-  cursor:pointer;position:relative;overflow:hidden;
-  transition:background .22s;
-}
-.card:hover{background:var(--bg2);}
-
-/* top accent line */
-.card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--ac,var(--c));
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .38s cubic-bezier(.4,0,.2,1);
-}
-.card:hover::before{transform:scaleX(1);}
-
-/* ── PREVIEW SWATCH ─────────────────────── */
-.swatch{
-  height:190px;position:relative;overflow:hidden;
-  background:var(--sw-bg,#080C18);
-  display:flex;align-items:center;justify-content:center;
-}
-.swatch-num{
-  font-family:var(--fd);font-size:7rem;font-weight:800;line-height:1;
-  color:rgba(255,255,255,.045);user-select:none;
-  transition:transform .5s cubic-bezier(.4,0,.2,1),color .3s;
-}
-.card:hover .swatch-num{transform:scale(1.08);color:rgba(255,255,255,.08);}
-
-/* floating chips inside swatch */
-.sw-tags{position:absolute;top:14px;left:14px;display:flex;gap:5px;flex-wrap:wrap;}
-.sw-tag{font-size:.58rem;letter-spacing:.09em;text-transform:uppercase;
-  padding:3px 7px;border-radius:3px;
-  background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.09);
-  color:rgba(255,255,255,.38);backdrop-filter:blur(6px);}
-
-.sw-bottom{position:absolute;bottom:14px;right:14px;
-  font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;
-  color:rgba(255,255,255,.3);padding:3px 9px;
-  background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.07);
-  border-radius:3px;backdrop-filter:blur(6px);}
-
-.badge-live{
-  position:absolute;top:14px;right:14px;
-  background:var(--c2);color:#000;
-  font-family:var(--fd);font-size:.55rem;font-weight:800;letter-spacing:.14em;
-  text-transform:uppercase;padding:3px 9px;border-radius:3px;}
-
-/* ── CARD BODY ──────────────────────────── */
-.card-body{padding:22px 24px 24px;flex:1;display:flex;flex-direction:column;}
-.ver-label{
-  font-family:var(--fd);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--ac,var(--c));margin-bottom:8px;}
-.card-title{font-family:var(--fd);font-size:1.05rem;font-weight:700;margin-bottom:7px;}
-.card-desc{font-size:.82rem;color:var(--muted);line-height:1.65;flex:1;}
-.card-footer{
-  margin-top:18px;padding-top:14px;border-top:1px solid var(--bdr);
-  display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.chips{display:flex;gap:5px;flex-wrap:wrap;}
-.chip{font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;
-  padding:2px 7px;border-radius:3px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--muted);}
-.open-btn{
-  font-family:var(--fd);font-size:.68rem;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--ac,var(--c));
-  display:flex;align-items:center;gap:5px;white-space:nowrap;
-  transition:gap .2s;}
-.card:hover .open-btn{gap:9px;}
-
-/* ── FOOTER ──────────────────────────────── */
-.site-footer{
-  position:relative;z-index:2;
-  padding:28px 56px;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
-@media(max-width:640px){.site-footer{padding:22px 20px;}}
-.f-logo{font-family:var(--fd);font-size:.85rem;font-weight:800;letter-spacing:.18em;color:var(--c);}
-.f-copy{font-size:.72rem;color:rgba(232,234,237,.18);}
-</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.3/dist/lenis.min.js"></script>
 </head>
 <body>
+<div class="blob-wrap"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div id="sp"></div>
+<div id="cur"></div>
+<div id="cur-r"></div>
 
-<header class="hdr">
-  <div class="hdr-top">
-    <div>
-      <div class="brand">MOVILDRIVE</div>
-      <h1 class="hdr-h1">Design<br>Lab</h1>
-      <p class="hdr-sub">Cada versión explora una estética y técnica radicalmente distinta. Haz click en cualquier tarjeta para abrirla.</p>
-    </div>
-    <div class="hdr-meta">
-      <div class="hdr-num">10</div>
-      <div class="hdr-num-lbl">Variantes</div>
-    </div>
-  </div>
-</header>
-
-<div class="grid">
-
-  <!-- V1 -->
-  <a href="index_v1_original.html" class="card" style="--ac:#888;--sw-bg:#1a1a2e;">
-    <div class="swatch">
-      <div class="swatch-num">V1</div>
-      <div class="sw-tags"><span class="sw-tag">Legacy</span><span class="sw-tag">2019</span></div>
-      <div class="sw-bottom">Bootstrap 4</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 1</div>
-      <div class="card-title">Bootstrap Original</div>
-      <p class="card-desc">Punto de partida. Bootstrap 4, jQuery, WOW.js. La web tal y como estaba antes del experimento.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">Bootstrap</span><span class="chip">jQuery</span><span class="chip">WOW.js</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V2 -->
-  <a href="index_v2_animated.html" class="card" style="--ac:#05E2FF;--sw-bg:#040810;">
-    <div class="swatch" style="background:linear-gradient(135deg,#040810 60%,#08182e);">
-      <div class="swatch-num" style="color:rgba(5,226,255,.07);">V2</div>
-      <div class="sw-tags"><span class="sw-tag">GSAP</span><span class="sw-tag">Canvas</span><span class="sw-tag">Cursor</span></div>
-      <div class="sw-bottom">Dark · Cyan</div>
-      <div class="badge-live">★ Ref</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 2</div>
-      <div class="card-title">Dark Electric</div>
-      <p class="card-desc">Dark theme, canvas particles conectadas, cursor trailer con lerp, GSAP ScrollTrigger stagger reveals, counters animados. Oxanium + DM Sans.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">GSAP</span><span class="chip">Canvas</span><span class="chip">Cursor</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V3 -->
-  <a href="index_v3_noir.html" class="card" style="--ac:#C9A060;--sw-bg:#000;">
-    <div class="swatch" style="background:#000;">
-      <div class="swatch-num" style="color:rgba(201,160,96,.07);">V3</div>
-      <div class="sw-tags"><span class="sw-tag">Serif</span><span class="sw-tag">Gold</span><span class="sw-tag">Grain</span></div>
-      <div class="sw-bottom">Noir · Cinema</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 3</div>
-      <div class="card-title">Noir Cinema</div>
-      <p class="card-desc">Negro puro, Cormorant Garamond italic, acentos dorados, grain de película pesado, layout por capítulos numerados. Estética agencia de lujo.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">GSAP</span><span class="chip">Grain</span><span class="chip">Serif</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V4 -->
-  <a href="index_v4_organic.html" class="card" style="--ac:#AEFF00;--sw-bg:#060A10;">
-    <div class="swatch" style="background:radial-gradient(ellipse at 30% 30%,rgba(174,255,0,.12),transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(124,58,237,.12),transparent 60%),#060A10;">
-      <div class="swatch-num" style="color:rgba(174,255,0,.06);">V4</div>
-      <div class="sw-tags"><span class="sw-tag">Blobs</span><span class="sw-tag">Glass</span><span class="sw-tag">Lime</span></div>
-      <div class="sw-bottom">Organic · Gradient</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 4</div>
-      <div class="card-title">Organic Gradient</div>
-      <p class="card-desc">Blobs CSS animados (lime + violet + sky), glassmorphism cards, gradiente animado en título, badge pulsante, pill buttons. Startup 2026.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">GSAP</span><span class="chip">CSS Blobs</span><span class="chip">Glass</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V5 -->
-  <a href="index_v5_brutalist.html" class="card" style="--ac:#E8001D;--sw-bg:#F5F2EE;">
-    <div class="swatch" style="background:#F5F2EE;">
-      <div class="swatch-num" style="color:rgba(10,10,10,.06);">V5</div>
-      <div class="sw-tags"><span class="sw-tag">Bebas</span><span class="sw-tag">Rojo</span><span class="sw-tag">Ticker</span></div>
-      <div class="sw-bottom">Swiss · Brutalist</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 5</div>
-      <div class="card-title">Swiss Brutalist</div>
-      <p class="card-desc">Blanco crema, Bebas Neue, rojo eléctrico, nav tipo barra de sistema, ticker horizontal infinito, sections numeradas con borde 2px. Opuesto total al V2.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">GSAP</span><span class="chip">Bebas</span><span class="chip">Marquee</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V6 -->
-  <a href="index_v6_editorial.html" class="card" style="--ac:#0040FF;--sw-bg:#F7F5F2;">
-    <div class="swatch" style="background:#F7F5F2;">
-      <div class="swatch-num" style="color:rgba(0,0,0,.05);">V6</div>
-      <div class="sw-tags"><span class="sw-tag">Lenis</span><span class="sw-tag">Clip-path</span><span class="sw-tag">Editorial</span></div>
-      <div class="sw-bottom">Editorial · Agency</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 6</div>
-      <div class="card-title">Lenis Editorial</div>
-      <p class="card-desc">Blanco roto, DM Serif Display gigante, Lenis smooth scroll + GSAP, clip-path wipe reveals, word-by-word hero. Inspirado en k72.ca y darkroom.engineering.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">Lenis</span><span class="chip">GSAP</span><span class="chip">Clip-path</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V7 -->
-  <a href="index_v7_horizontal.html" class="card" style="--ac:#FF6B35;--sw-bg:#0A080F;">
-    <div class="swatch" style="background:#0A080F;">
-      <div class="swatch-num" style="color:rgba(255,107,53,.07);">V7</div>
-      <div class="sw-tags"><span class="sw-tag">Horizontal</span><span class="sw-tag">Pinned</span><span class="sw-tag">Cinematic</span></div>
-      <div class="sw-bottom">Scroll · Storytelling</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 7</div>
-      <div class="card-title">Horizontal Story</div>
-      <p class="card-desc">Scroll vertical desplaza paneles horizontales pinneados — el truco de makemepulse. 5 escenas cinematográficas con parallax interno. Cursor cambia por sección.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">GSAP Pin</span><span class="chip">Horizontal</span><span class="chip">Parallax</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V8 -->
-  <a href="index_v8_webgl.html" class="card" style="--ac:#FF00A8;--sw-bg:#0D0B1E;">
-    <div class="swatch" style="background:radial-gradient(ellipse at 50% 40%,rgba(255,0,168,.1),transparent 60%),#0D0B1E;">
-      <div class="swatch-num" style="color:rgba(255,0,168,.07);">V8</div>
-      <div class="sw-tags"><span class="sw-tag">Three.js</span><span class="sw-tag">Shader</span><span class="sw-tag">Displacement</span></div>
-      <div class="sw-bottom">WebGL · GentleRain</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 8</div>
-      <div class="card-title">WebGL Displacement</div>
-      <p class="card-desc">Three.js noise flow field en fondo, displacement shader en hover de imágenes, paleta índigo+magenta, morphing clip-path orgánico. Categoría por encima en wow factor.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">Three.js</span><span class="chip">GLSL</span><span class="chip">Lenis</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V9 -->
-  <a href="index_v9_kinetic.html" class="card" style="--ac:#C8522A;--sw-bg:#F0EBE1;">
-    <div class="swatch" style="background:#F0EBE1;">
-      <div class="swatch-num" style="color:rgba(10,10,10,.05);">V9</div>
-      <div class="sw-tags"><span class="sw-tag">Kinetic</span><span class="sw-tag">SplitText</span><span class="sw-tag">Serif</span></div>
-      <div class="sw-bottom">Typography · Furrow</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 9</div>
-      <div class="card-title">Kinetic Typography</div>
-      <p class="card-desc">La tipografía ES el diseño. Palabras enormes solapadas, letras en 3D rotateX, sección entera de fondo-texto. Playfair Italic + Bebas. Crema + terracota. Sin WebGL.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">GSAP</span><span class="chip">SplitText</span><span class="chip">3D CSS</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
-  <!-- V10 -->
-  <a href="index_v10_depth.html" class="card" style="--ac:#7C3AED;--sw-bg:#060010;">
-    <div class="swatch" style="background:radial-gradient(ellipse at 50% 50%,rgba(124,58,237,.15),transparent 60%),#060010;">
-      <div class="swatch-num" style="color:rgba(124,58,237,.08);">V10</div>
-      <div class="sw-tags"><span class="sw-tag">Z-axis</span><span class="sw-tag">3D CSS</span><span class="sw-tag">Nebula</span></div>
-      <div class="sw-bottom">Depth · Space</div>
-    </div>
-    <div class="card-body">
-      <div class="ver-label">Versión 10</div>
-      <div class="card-title">3D Z-Axis Depth</div>
-      <p class="card-desc">Scroll mueve la cámara en Z — elementos vienen hacia el viewer. CSS perspective 3D + nebulosa animada de fondo. Hero card flotante que se acerca. Violeta profundo.</p>
-      <div class="card-footer">
-        <div class="chips"><span class="chip">CSS 3D</span><span class="chip">GSAP</span><span class="chip">Nebula</span></div>
-        <div class="open-btn">Ver →</div>
-      </div>
-    </div>
-  </a>
-
+<div class="s-dots" id="dots">
+  <div class="s-dot active" data-target=".hero"></div>
+  <div class="s-dot" data-target=".stats-row"></div>
+  <div class="s-dot" data-target="#what"></div>
+  <div class="s-dot" data-target=".manifesto"></div>
+  <div class="s-dot" data-target=".split"></div>
+  <div class="s-dot" data-target=".vid-wrap"></div>
+  <div class="s-dot" data-target=".contact"></div>
 </div>
 
-<footer class="site-footer">
-  <div class="f-logo">MOVILDRIVE</div>
-  <div class="f-copy">Design Lab — 10 variantes · 2025</div>
+<nav id="nav">
+  <a href="/" class="n-logo">Movildrive</a>
+  <ul class="n-links">
+    <li><a href="https://www.movildrive.com/car-sharing.html">Car-Sharing</a></li>
+    <li><a href="https://www.movildrive.com/fleet-manager-movildrive.html">Flotas</a></li>
+    <li><a href="https://www.movildrive.com/contact.html">Contacto</a></li>
+    <li><a href="https://www.movildrive.com/login-fleet-manager.html" class="n-enter">Entrar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow" id="heyebrow">Movilidad · Sostenibilidad · 2025</div>
+  <h1 class="hero-title" id="htitle">
+    <span class="ln"><span class="wd">Mueve tu</span></span>
+    <span class="ln"><span class="wd hi">Empresa</span></span>
+    <span class="ln"><span class="wd">sin límites.</span></span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc" id="hdesc">El futuro del transporte eléctrico para PYMES y autónomos. Alquila vehículos cuando los necesites — flexible, sostenible, sin emisiones.</p>
+    <div class="hero-ctas" id="hctas">
+      <a href="https://www.movildrive.com/car-sharing.html" class="btn-dark">Car-Sharing →</a>
+      <a href="https://www.movildrive.com/fleet-manager-movildrive.html" class="btn-line">Gestión de Flotas</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-cell"><div class="stat-n" data-count="500" data-s="+">0</div><div class="stat-l">Usuarios Activos</div></div>
+  <div class="stat-cell"><div class="stat-n">0<span style="font-size:.6em;">g</span></div><div class="stat-l">Emisiones CO₂</div></div>
+  <div class="stat-cell"><div class="stat-n" data-count="24" data-s="/7">0</div><div class="stat-l">Soporte</div></div>
+</div>
+
+<!-- WHAT WE DO -->
+<section class="section" id="what">
+  <span class="bg-num">01</span>
+  <div class="what-header">
+    <span class="what-num">01 / 04 &nbsp;·&nbsp; Soluciones</span>
+    <span class="what-title-lbl">¿Qué hacemos?</span>
+  </div>
+  <div class="what-grid">
+    <div class="what-item rv"><div class="wi-num">— 01 Plataforma</div><div class="wi-title">Control de Flota</div><p class="wi-text">SaaS completamente personalizable. Monitoriza tus vehículos en tiempo real y optimiza cada ruta con datos en directo.</p></div>
+    <div class="what-item rv"><div class="wi-num">— 02 Móvil</div><div class="wi-title">App nativa</div><p class="wi-text">Android e iOS. Reserva, abre y devuelve tus vehículos desde el móvil en segundos. Sin llaves, sin papeles.</p></div>
+    <div class="what-item rv"><div class="wi-num">— 03 Energía</div><div class="wi-title">Cero Emisiones</div><p class="wi-text">100% eléctrico. Sostenibilidad sin sacrificar rendimiento, autonomía ni comodidad para tu empresa.</p></div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<div class="manifesto rv">
+  <div class="manifesto-eyebrow">02 / 04 &nbsp;·&nbsp; Manifiesto</div>
+  <p class="manifesto-text">El transporte urbano cambia. <em>Las ciudades lo exigen.</em> El planeta lo necesita. <span class="accent">Movildrive</span> es la respuesta.</p>
+</div>
+
+<!-- APP SPLIT -->
+<div class="split">
+  <div class="split-img" id="simg"><img src="https://www.movildrive.com/img/scr-img/special.png" alt="App Movildrive" onerror="this.src='https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=900&q=80'"></div>
+  <div class="split-txt" id="stxt">
+    <span class="bg-num" style="right:-8vw;font-size:24vw;">03</span>
+    <div class="split-eyebrow">03 / 04 &nbsp;·&nbsp; Descarga</div>
+    <h2 class="split-h">El servicio de<br>movilidad <em>que faltaba.</em></h2>
+    <p class="split-p">Alquila una furgoneta eléctrica cuando la necesites. Para autónomos, PYMES y particulares. Sin compromisos a largo plazo, sin sorpresas.</p>
+    <div class="app-row">
+      <a href="https://play.google.com/store/apps/details?id=com.movildriveapp.beta" class="app-lnk">
+        <div class="app-lnk-left"><span style="font-size:1.4rem;">🤖</span><div><div class="app-lnk-name">Google Play</div><div class="app-lnk-sub">Disponible</div></div></div>
+        <span class="app-lnk-arr">→</span>
+      </a>
+      <a href="https://apps.apple.com/us/app/movildrive/id1475963960?ls=1" class="app-lnk">
+        <div class="app-lnk-left"><span style="font-size:1.4rem;">🍎</span><div><div class="app-lnk-name">App Store</div><div class="app-lnk-sub">Disponible</div></div></div>
+        <span class="app-lnk-arr">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO -->
+<div class="vid-wrap rv">
+  <img src="https://www.movildrive.com/img/scr-img/video.jpg" alt="Vídeo Movildrive" onerror="this.style.cssText='width:100%;aspect-ratio:21/9;background:#1a1a1a;object-fit:cover;display:block'">
+  <div class="vid-over">
+    <a href="https://www.youtube.com/watch?v=7yWOCZb9Yi8" class="vid-btn" target="_blank" rel="noopener">
+      <div class="vid-play"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M8 5L19 12L8 19V5Z"/></svg></div>
+      <span class="vid-label">Ver vídeo</span>
+    </a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact">
+  <div class="cc-l rv">
+    <span class="bg-num" style="right:auto;left:-4vw;font-size:24vw;">04</span>
+    <div style="font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);margin-bottom:24px;display:flex;align-items:center;gap:12px;"><span style="display:block;width:24px;height:1px;background:var(--coral);"></span>04 / 04 · Contacto</div>
+    <h2 class="cc-h">¿Hablamos<br><em>de movilidad?</em></h2>
+    <p class="cc-p">Cuéntanos tu proyecto y diseñamos la solución de transporte eléctrico perfecta para tu empresa.</p>
+  </div>
+  <div class="cc-r rv">
+    <a href="mailto:hola@movildrive.com" class="cc-email">hola@movildrive.com</a>
+    <p class="cc-note">// Respondemos en menos de 24h</p>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">Movildrive</div>
+  <ul class="f-right">
+    <li><a href="https://www.movildrive.com/condiciones.html">Términos</a></li>
+    <li><a href="https://www.movildrive.com/privacidad.html">Privacidad</a></li>
+    <li><a href="https://www.movildrive.com/contacto.html">Contacto</a></li>
+  </ul>
+  <div class="f-copy">© 2025 Movildrive</div>
 </footer>
 
+<script src="assets/js/main.js"></script>
 </body>
 </html>
