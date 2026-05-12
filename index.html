@@ -108,14 +108,15 @@
   </div>
 </div>
 
-<!-- VIDEO -->
-<div class="vid-wrap rv">
-  <img src="https://www.movildrive.com/img/scr-img/video.jpg" alt="Vídeo Movildrive" onerror="this.style.cssText='width:100%;aspect-ratio:21/9;background:#1a1a1a;object-fit:cover;display:block'">
+<!-- VIDEO embed lazy (YouTube, autoplay al click) -->
+<div class="vid-wrap rv" id="vidwrap" data-yt="7yWOCZb9Yi8" role="button" tabindex="0" aria-label="Reproducir vídeo Movildrive">
+  <img src="https://i.ytimg.com/vi/7yWOCZb9Yi8/maxresdefault.jpg" alt="Vídeo Movildrive"
+       onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/7yWOCZb9Yi8/hqdefault.jpg'">
   <div class="vid-over">
-    <a href="https://www.youtube.com/watch?v=7yWOCZb9Yi8" class="vid-btn" target="_blank" rel="noopener">
-      <div class="vid-play"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M8 5L19 12L8 19V5Z"/></svg></div>
+    <span class="vid-btn">
+      <span class="vid-play"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M8 5L19 12L8 19V5Z"/></svg></span>
       <span class="vid-label">Ver vídeo</span>
-    </a>
+    </span>
   </div>
 </div>
 

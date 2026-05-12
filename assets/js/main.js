@@ -110,4 +110,21 @@
       scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
     });
   });
+
+  // ── VIDEO embed lazy (YouTube, autoplay al click) ──
+  var vw = document.getElementById('vidwrap');
+  if (vw) {
+    var playYT = function(){
+      if (vw.dataset.loaded === '1') return;
+      vw.dataset.loaded = '1';
+      var id = vw.dataset.yt;
+      vw.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id +
+        '?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="Movildrive" ' +
+        'allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    };
+    vw.addEventListener('click', playYT);
+    vw.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playYT(); }
+    });
+  }
 })();
