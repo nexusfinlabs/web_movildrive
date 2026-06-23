@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alberto Lobo — About Me</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #13131a;
+            --border: rgba(255,255,255,0.07);
+            --accent: #f0b429;
+            --accent2: #7c5cbf;
+            --text: #e8e8f0;
+            --muted: #7a7a90;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.2rem 3rem;
+            background: rgba(10,10,15,0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+        .nav-flags { display: flex; gap: 0.6rem; font-size: 1.3rem; }
+        .nav-flags a { text-decoration: none; opacity: 0.7; transition: opacity .2s; }
+        .nav-flags a:hover { opacity: 1; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 8rem 3rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(124,92,191,0.18) 0%, transparent 70%),
+                        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(240,180,41,0.10) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero-inner { max-width: 820px; position: relative; }
+        .hero-tag {
+            display: inline-block;
+            background: rgba(240,180,41,0.12);
+            border: 1px solid rgba(240,180,41,0.3);
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.9rem;
+            border-radius: 99px;
+            margin-bottom: 1.8rem;
+        }
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero p {
+            font-size: 1.08rem;
+            color: var(--muted);
+            max-width: 640px;
+            line-height: 1.8;
+        }
+        .hero-stats {
+            display: flex; gap: 2.5rem; margin-top: 3rem; flex-wrap: wrap;
+        }
+        .stat-item { }
+        .stat-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.2rem;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+        /* SECTION */
+        section { padding: 6rem 3rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .section-label {
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem;
+        }
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            color: #fff; margin-bottom: 3.5rem;
+        }
+
+        /* HOBBIES GRID */
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem;
+        }
+        .hobby-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.8rem;
+            transition: transform .25s, border-color .25s, box-shadow .25s;
+        }
+        .hobby-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(240,180,41,0.25);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+        .hobby-icon { font-size: 2rem; margin-bottom: 0.9rem; }
+        .hobby-card h3 { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+        .hobby-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+
+        /* STORY CARDS */
+        .story { background: #0e0e15; }
+        .story-list { display: flex; flex-direction: column; gap: 5rem; }
+        .story-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .story-item.reverse { direction: rtl; }
+        .story-item.reverse > * { direction: ltr; }
+        .story-img {
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--surface);
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--border);
+        }
+        .story-img img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block;
+        }
+        .story-img .img-placeholder {
+            font-size: 4rem; opacity: 0.3;
+        }
+        .story-text h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+            color: #fff; margin-bottom: 1rem; line-height: 1.2;
+        }
+        .story-text p { color: var(--muted); line-height: 1.8; font-size: 0.95rem; }
+
+        /* BIO STRIP */
+        .bio-strip {
+            background: linear-gradient(135deg, rgba(124,92,191,0.15) 0%, rgba(240,180,41,0.08) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 3rem;
+            text-align: center;
+        }
+        .bio-strip p {
+            max-width: 760px; margin: 0 auto;
+            font-size: 1.15rem; color: #c8c8d8; line-height: 1.85;
+        }
+        .bio-strip strong { color: var(--accent); font-weight: 600; }
+
+        /* FOOTER */
+        footer {
+            padding: 2.5rem 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .hero { padding: 7rem 1.5rem 4rem; }
+            section { padding: 4rem 1.5rem; }
+            .story-item, .story-item.reverse { grid-template-columns: 1fr; direction: ltr; gap: 2rem; }
+            .bio-strip { padding: 3rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-logo" href="/">Alberto Lobo</a>
+    <div class="nav-flags">
+        <a href="https://movildrive.com/index.html">🇪🇸</a>
+        <a href="https://movildrive.com/DE-de/index.html">🇩🇪</a>
+        <a href="https://movildrive.com/EN-en/index.html">🇬🇧</a>
+        <a href="https://movildrive.com/IT-it/index.html">🇮🇹</a>
+        <a href="https://movildrive.com/FR-fr/index.html">🇫🇷</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-inner">
+        <span class="hero-tag">About Me</span>
+        <h1>Entrepreneur &<br><span>Tech Builder</span></h1>
+        <p>Telecommunications Systems Engineer with more than 18 years of international experience in Hardware, Software and Systems. I lead high-tech projects with a lean mindset and agile approach — delivering always on time, with people and purpose at the center.</p>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-num">18+</div>
+                <div class="stat-label">Years of experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">66+</div>
+                <div class="stat-label">Countries visited</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">∞</div>
+                <div class="stat-label">Curiosity level</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="bio-strip">
+    <p>
+        <strong>Product and customer-oriented</strong> — I focus not only on final results but on the full picture: investor reports, KPIs, financial forecasts.
+        <strong>Very communicative &amp; sociable</strong>, I find cross-functional and multicultural teams the most powerful engine for growth.
+    </p>
+</div>
+
+<section>
+    <div class="container">
+        <div class="section-label">Lifestyle</div>
+        <div class="section-title">What fills my time</div>
+        <div class="hobbies-grid">
+            <div class="hobby-card">
+                <div class="hobby-icon">🐕</div>
+                <h3>Hiro</h3>
+                <p>My American Akita puppy born in Serbia. He just wants to play, eat and sleep — the ideal co-founder.</p>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">🎸</div>
+                <h3>Music &amp; Live Gigs</h3>
+                <p>Spotify Premium since day one. Napster and mIRC veteran. Music is the original soundtrack of my life.</p>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">💪</div>
+                <h3>Sports</h3>
+                <p>To keep mind healthy and focused, sport is non-negotiable. Every day, some form of movement.</p>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">✈️</div>
+                <h3>Travelling</h3>
+                <p>66+ countries and counting. Backpacking from Patagonia to Mexico in 2017. One life, one planet — discover it all.</p>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">🪁</div>
+                <h3>Kitesurfing</h3>
+                <p>Started during COVID and got hooked forever. Wind, sea and freedom — everyone should try it at least once.</p>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">📚</div>
+                <h3>Learning</h3>
+                <p>New framework, brico, cooking, something you've never done before — the most powerful creative feeling.</p>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">👶</div>
+                <h3>Mis Sobris</h3>
+                <p>Aitor, Iker, Chloe y Unai — the best squad.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="story">
+    <div class="container">
+        <div class="section-label">Stories</div>
+        <div class="section-title">The long version</div>
+        <div class="story-list">
+
+            <div class="story-item">
+                <div class="story-img">
+                    <img src="https://movildrive.com/img/scr-img/Hiro2.jpg" alt="Hiro" onerror="this.parentElement.innerHTML='<div class=img-placeholder>🐕</div>'">
+                </div>
+                <div class="story-text">
+                    <h2>Hiro<br>Akita Americano</h2>
+                    <p>Born in Serbia on 1.9.2020, already fully Spanish. His favourite friends at the park are Labradors and Golden Retrievers. Originally from the Akita region in Japan (17th century), crossed with Tosa and Mastiff to grow in size. Hiro means "Big" in Japanese — and so he is. He travels everywhere with me, loves hiking on weekends and walking along the Barcelona beach.</p>
+                </div>
+            </div>
+
+            <div class="story-item reverse">
+                <div class="story-img">
+                    <img src="https://movildrive.com/img/scr-img/gig.jpg" alt="Live Music" onerror="this.parentElement.innerHTML='<div class=img-placeholder>🎸</div>'">
+                </div>
+                <div class="story-text">
+                    <h2>Gigs, Live Concerts<br>&amp; Music Festivals</h2>
+                    <p>Music is the original soundtrack of my life. I could listen 24/7 — while working, cooking or doing sports. It can bring your full attention and make you feel every emotion. From Napster and mIRC in the early days to front-row festival seats today.</p>
+                </div>
+            </div>
+
+            <div class="story-item">
+                <div class="story-img">
+                    <img src="https://movildrive.com/img/scr-img/Kitesurf_Tarifa.jpg" alt="Kitesurfing" onerror="this.parentElement.innerHTML='<div class=img-placeholder>🪁</div>'">
+                </div>
+                <div class="story-text">
+                    <h2>Kite Surfing<br>&amp; Good Vibes</h2>
+                    <p>A way to enjoy nature and sports at the same time. Started during Covid and felt I wanted to do it forever. Still a beginner, but always in the mood for more. A combination of magic, sport and sea that everyone should try at least once in their lives.</p>
+                </div>
+            </div>
+
+            <div class="story-item reverse">
+                <div class="story-img">
+                    <img src="https://movildrive.com/img/scr-img/Nazare.jpg" alt="Travel" onerror="this.parentElement.innerHTML='<div class=img-placeholder>✈️</div>'">
+                </div>
+                <div class="story-text">
+                    <h2>Travel<br>Addiction</h2>
+                    <p>66+ countries and there will always be a new spot for me. I love backpacking, mountain hiking, wild beaches and Amazonian eco-lodges. During 2017 I backpacked for several months across South America — from Punta Arenas, Argentina to Guadalajara, México. Virgin beaches in Panamá and Brazil, active volcanoes in Chile, geysers in Bolivia, pyramids in Guatemala and Mexico.</p>
+                    <p style="margin-top:1rem;font-style:italic;color:#9090aa;">Everyone must take a sabbatical once in their lives. Look around. Stop for a while.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>Alberto Lobo &mdash; <a href="mailto:hola@nexusfinlabs.com">hola@nexusfinlabs.com</a> &mdash; <a href="https://nexusfinlabs.com">nexusfinlabs.com</a></p>
+</footer>
+
+</body>
+</html>
