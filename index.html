@@ -1,149 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Movildrive — Movilidad eléctrica para empresas</title>
-<meta name="description" content="El futuro del transporte eléctrico para PYMES y autónomos. Alquila vehículos cuando los necesites — flexible, sostenible, sin emisiones.">
-<meta property="og:title" content="Movildrive — Movilidad eléctrica para empresas">
-<meta property="og:description" content="Car-Sharing y gestión de flotas 100% eléctrico.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.movildrive.com/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/main.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lenis@1.3.3/dist/lenis.min.js"></script>
-</head>
-<body>
-<div class="blob-wrap"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
-<div id="sp"></div>
-<div id="cur"></div>
-<div id="cur-r"></div>
-
-<div class="s-dots" id="dots">
-  <div class="s-dot active" data-target=".hero"></div>
-  <div class="s-dot" data-target=".stats-row"></div>
-  <div class="s-dot" data-target="#what"></div>
-  <div class="s-dot" data-target=".manifesto"></div>
-  <div class="s-dot" data-target=".split"></div>
-  <div class="s-dot" data-target=".vid-wrap"></div>
-  <div class="s-dot" data-target=".contact"></div>
-</div>
-
-<nav id="nav">
-  <a href="/" class="n-logo">Movildrive</a>
-  <ul class="n-links">
-    <li><a href="https://www.movildrive.com/car-sharing.html">Car-Sharing</a></li>
-    <li><a href="https://www.movildrive.com/fleet-manager-movildrive.html">Flotas</a></li>
-    <li><a href="https://www.movildrive.com/contact.html">Contacto</a></li>
-    <li><a href="https://www.movildrive.com/login-fleet-manager.html" class="n-enter">Entrar</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-eyebrow" id="heyebrow">Movilidad · Sostenibilidad · 2025</div>
-  <h1 class="hero-title" id="htitle">
-    <span class="ln"><span class="wd">Mueve tu</span></span>
-    <span class="ln"><span class="wd hi">Empresa</span></span>
-    <span class="ln"><span class="wd">sin límites.</span></span>
-  </h1>
-  <div class="hero-bottom">
-    <p class="hero-desc" id="hdesc">El futuro del transporte eléctrico para PYMES y autónomos. Alquila vehículos cuando los necesites — flexible, sostenible, sin emisiones.</p>
-    <div class="hero-ctas" id="hctas">
-      <a href="https://www.movildrive.com/car-sharing.html" class="btn-dark">Car-Sharing →</a>
-      <a href="https://www.movildrive.com/fleet-manager-movildrive.html" class="btn-line">Gestión de Flotas</a>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050505">
+    <title>Movildrive — Coming Soon</title>
+    <meta name="description" content="Una nueva forma de moverse está a punto de llegar. Descubre el próximo capítulo de Movildrive.">
+    <meta property="og:title" content="Movildrive — Coming Soon">
+    <meta property="og:description" content="El próximo capítulo de la movilidad. Muy pronto.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.movildrive.com/">
+    <meta property="og:image" content="https://www.movildrive.com/assets/img/coming-soon/four-towers.png">
+    <link rel="canonical" href="https://www.movildrive.com/">
+    <link rel="icon" type="image/png" href="assets/img/coming-soon/emblem.png">
+    <link rel="preload" href="assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/img/coming-soon/four-towers.png" as="image" fetchpriority="high">
+    <link rel="stylesheet" href="assets/css/coming-soon.css">
+    <script src="assets/js/coming-soon.js" defer></script>
+  </head>
+  <body>
+    <div class="experience" id="experience">
+      <div class="scene-reveal" id="scene-reveal" aria-hidden="true">
+        <div class="scene" data-name="Cuatro Torres" data-caption="Madrid, desde otra perspectiva.">
+          <img src="assets/img/coming-soon/four-towers.png" alt="" class="scene-image scene-image--towers" fetchpriority="high">
+        </div>
+        <div class="scene" data-name="La ciudad" data-caption="Diseñado para lo que viene.">
+          <img src="assets/img/coming-soon/city.png" alt="" class="scene-image" decoding="async">
+        </div>
+        <div class="scene" data-name="El concepto" data-caption="Una visión. Una nueva dirección.">
+          <img src="assets/img/coming-soon/concept.png" alt="" class="scene-image scene-image--concept" decoding="async">
+        </div>
+        <div class="scene" data-name="Madrid en movimiento" data-caption="El futuro tiene un punto de partida.">
+          <img src="assets/img/coming-soon/kio.png" alt="" class="scene-image scene-image--kio" decoding="async">
+        </div>
+      </div>
+      <div class="frame-shade" aria-hidden="true"></div>
+      <header class="header">
+        <a class="brand" href="./" aria-label="Movildrive, inicio">
+          <img src="assets/img/coming-soon/emblem.png" alt="" width="64" height="64">
+          <span class="brand-wordmark">MOVILDRIVE</span>
+        </a>
+        <div class="header-right">
+          <span class="location">MADRID, ESPAÑA</span>
+          <a class="contact-link" href="mailto:hola@movildrive.com">Hablemos <span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+      <main class="hero" id="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-light" aria-hidden="true"></span> EL PRÓXIMO CAPÍTULO</p>
+          <h1><span>Coming</span><span class="title-second">Soon<span class="title-period">.</span></span></h1>
+          <p class="hero-description">Una nueva forma de moverse.<br>Un nuevo horizonte por descubrir.</p>
+        </div>
+        <div class="discovery">
+          <span class="discovery-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v5m0 8v5M3 12h5m8 0h5"/><circle cx="12" cy="12" r="2.5"/></svg></span>
+          <p class="discovery-hint"><span class="desktop-hint">Mueve el cursor para descubrir</span><span class="touch-hint">Desliza el dedo para descubrir</span></p>
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="gallery-bar" role="region" aria-label="Carrusel de imágenes de Movildrive" aria-roledescription="carrusel">
+          <div class="scene-info">
+            <span class="scene-count"><span id="scene-number">01</span><span class="count-divider">/</span><span class="count-total">04</span></span>
+            <span class="scene-name" id="scene-name">Cuatro Torres</span>
+          </div>
+          <div class="gallery-controls">
+            <button class="icon-button previous" id="previous" type="button" aria-label="Imagen anterior"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 7-5 5 5 5"/></svg></button>
+            <div class="slide-selectors" role="group" aria-label="Elegir imagen">
+              <button class="slide-selector" type="button" aria-label="Imagen 1: Cuatro Torres" aria-current="true" data-slide="0"><span class="selector-track"><span class="selector-progress"></span></span></button>
+              <button class="slide-selector" type="button" aria-label="Imagen 2: La ciudad" data-slide="1"><span class="selector-track"><span class="selector-progress"></span></span></button>
+              <button class="slide-selector" type="button" aria-label="Imagen 3: El concepto" data-slide="2"><span class="selector-track"><span class="selector-progress"></span></span></button>
+              <button class="slide-selector" type="button" aria-label="Imagen 4: Madrid en movimiento" data-slide="3"><span class="selector-track"><span class="selector-progress"></span></span></button>
+            </div>
+            <button class="icon-button next" id="next" type="button" aria-label="Imagen siguiente"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m10 7 5 5-5 5"/></svg></button>
+            <button class="icon-button pause-button" id="pause" type="button" aria-label="Pausar carrusel" aria-pressed="false"><svg class="pause-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 7v10M15 7v10"/></svg><svg class="play-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 9 6-9 6V6Z"/></svg></button>
+          </div>
+          <p class="gallery-note">EL FUTURO, A UN PASO.</p>
+        </div>
+        <div class="footer-bottom">
+          <span>© <span id="year">2026</span> Movildrive</span>
+          <span class="footer-signature">Una visión en movimiento<span class="signature-star" aria-hidden="true">✳</span></span>
+        </div>
+      </footer>
+      <div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+      <p class="sr-only" id="gallery-announcement" aria-live="polite" aria-atomic="true"></p>
+      <noscript><p class="no-script">Muy pronto. Contacta con nosotros en <a href="mailto:hola@movildrive.com">hola@movildrive.com</a>.</p></noscript>
     </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats-row">
-  <div class="stat-cell"><div class="stat-n" data-count="500" data-s="+">0</div><div class="stat-l">Usuarios Activos</div></div>
-  <div class="stat-cell"><div class="stat-n">0<span style="font-size:.6em;">g</span></div><div class="stat-l">Emisiones CO₂</div></div>
-  <div class="stat-cell"><div class="stat-n" data-count="24" data-s="/7">0</div><div class="stat-l">Soporte</div></div>
-</div>
-
-<!-- WHAT WE DO -->
-<section class="section" id="what">
-  <span class="bg-num">01</span>
-  <div class="what-header">
-    <span class="what-num">01 / 04 &nbsp;·&nbsp; Soluciones</span>
-    <span class="what-title-lbl">¿Qué hacemos?</span>
-  </div>
-  <div class="what-grid">
-    <div class="what-item rv"><div class="wi-num">— 01 Plataforma</div><div class="wi-title">Control de Flota</div><p class="wi-text">SaaS completamente personalizable. Monitoriza tus vehículos en tiempo real y optimiza cada ruta con datos en directo.</p></div>
-    <div class="what-item rv"><div class="wi-num">— 02 Móvil</div><div class="wi-title">App nativa</div><p class="wi-text">Android e iOS. Reserva, abre y devuelve tus vehículos desde el móvil en segundos. Sin llaves, sin papeles.</p></div>
-    <div class="what-item rv"><div class="wi-num">— 03 Energía</div><div class="wi-title">Cero Emisiones</div><p class="wi-text">100% eléctrico. Sostenibilidad sin sacrificar rendimiento, autonomía ni comodidad para tu empresa.</p></div>
-  </div>
-</section>
-
-<!-- MANIFESTO -->
-<div class="manifesto rv">
-  <div class="manifesto-eyebrow">02 / 04 &nbsp;·&nbsp; Manifiesto</div>
-  <p class="manifesto-text">El transporte urbano cambia. <em>Las ciudades lo exigen.</em> El planeta lo necesita. <span class="accent">Movildrive</span> es la respuesta.</p>
-</div>
-
-<!-- APP SPLIT -->
-<div class="split">
-  <div class="split-img" id="simg"><img src="https://www.movildrive.com/img/scr-img/special.png" alt="App Movildrive" onerror="this.src='https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=900&q=80'"></div>
-  <div class="split-txt" id="stxt">
-    <span class="bg-num" style="right:-8vw;font-size:24vw;">03</span>
-    <div class="split-eyebrow">03 / 04 &nbsp;·&nbsp; Descarga</div>
-    <h2 class="split-h">El servicio de<br>movilidad <em>que faltaba.</em></h2>
-    <p class="split-p">Alquila una furgoneta eléctrica cuando la necesites. Para autónomos, PYMES y particulares. Sin compromisos a largo plazo, sin sorpresas.</p>
-    <div class="app-row">
-      <a href="https://play.google.com/store/apps/details?id=com.movildriveapp.beta" class="app-lnk">
-        <div class="app-lnk-left"><span style="font-size:1.4rem;">🤖</span><div><div class="app-lnk-name">Google Play</div><div class="app-lnk-sub">Disponible</div></div></div>
-        <span class="app-lnk-arr">→</span>
-      </a>
-      <a href="https://apps.apple.com/us/app/movildrive/id1475963960?ls=1" class="app-lnk">
-        <div class="app-lnk-left"><span style="font-size:1.4rem;">🍎</span><div><div class="app-lnk-name">App Store</div><div class="app-lnk-sub">Disponible</div></div></div>
-        <span class="app-lnk-arr">→</span>
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- VIDEO embed lazy (YouTube, autoplay al click) -->
-<div class="vid-wrap rv" id="vidwrap" data-yt="7yWOCZb9Yi8" role="button" tabindex="0" aria-label="Reproducir vídeo Movildrive">
-  <img src="https://i.ytimg.com/vi/7yWOCZb9Yi8/maxresdefault.jpg" alt="Vídeo Movildrive"
-       onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/7yWOCZb9Yi8/hqdefault.jpg'">
-  <div class="vid-over">
-    <span class="vid-btn">
-      <span class="vid-play"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M8 5L19 12L8 19V5Z"/></svg></span>
-      <span class="vid-label">Ver vídeo</span>
-    </span>
-  </div>
-</div>
-
-<!-- CONTACT -->
-<div class="contact">
-  <div class="cc-l rv">
-    <span class="bg-num" style="right:auto;left:-4vw;font-size:24vw;">04</span>
-    <div style="font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);margin-bottom:24px;display:flex;align-items:center;gap:12px;"><span style="display:block;width:24px;height:1px;background:var(--coral);"></span>04 / 04 · Contacto</div>
-    <h2 class="cc-h">¿Hablamos<br><em>de movilidad?</em></h2>
-    <p class="cc-p">Cuéntanos tu proyecto y diseñamos la solución de transporte eléctrico perfecta para tu empresa.</p>
-  </div>
-  <div class="cc-r rv">
-    <a href="mailto:hola@movildrive.com" class="cc-email">hola@movildrive.com</a>
-    <p class="cc-note">// Respondemos en menos de 24h</p>
-  </div>
-</div>
-
-<footer>
-  <div class="f-logo">Movildrive</div>
-  <ul class="f-right">
-    <li><a href="https://www.movildrive.com/condiciones.html">Términos</a></li>
-    <li><a href="https://www.movildrive.com/privacidad.html">Privacidad</a></li>
-    <li><a href="https://www.movildrive.com/contacto.html">Contacto</a></li>
-  </ul>
-  <div class="f-copy">© 2025 Movildrive</div>
-</footer>
-
-<script src="assets/js/main.js"></script>
-</body>
+  </body>
 </html>

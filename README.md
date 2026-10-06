@@ -1,31 +1,34 @@
-# web_movildrive
+# Movildrive — Coming Soon
 
-Landing estática de **movildrive.com**. HTML + CSS + JS, sin build.
+Landing negra con cuatro imágenes de los coches de Movildrive, carrusel con transiciones suaves y efecto linterna que sigue al cursor. HTML, CSS y JavaScript sin dependencias de ejecución, servicios externos ni build.
 
-## Estructura
+## Vista local
 
-```
-index.html              ← landing (la única que va a producción de momento)
-assets/
-  css/main.css
-  js/main.js
-_archive/               ← ensayos v1..v11 + catálogo previo (no se suben)
+Desde esta carpeta:
+
+```sh
+python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
-## Despliegue
+Abrir http://localhost:4173. Recargar el navegador después de cada cambio.
 
-Producción: IONOS SFTP. Subir **solo** `index.html` + `assets/`.
+## Personalización
 
-```bash
-source ~/.env.global
-lftp -u "$IONOS_SFTP_USER,$IONOS_SFTP_PASS" sftp://$IONOS_SFTP_HOST \
-  -e "mirror -R --exclude-glob _archive/ --exclude-glob .git/ --exclude .gitignore --exclude README.md /Users/alberto/Desktop/SW_AI/web_movildrive/ /web_movildrive/; bye"
-```
+- `index.html`: textos, contacto, imágenes y orden del carrusel.
+- `assets/css/coming-soon.css`: tipografía, composición, colores, máscara del foco y diseño móvil.
+- `assets/js/coming-soon.js`: objeto `SETTINGS` al principio del archivo. Duración de imagen: 6500 ms; radio del foco: 340 px en escritorio y 235 px en móvil.
+- `assets/img/coming-soon/`: imágenes originales; el carrusel utiliza las cuatro de los coches. El emblema se utiliza en la cabecera y el favicon.
+- `assets/fonts/`: Instrument Sans local; no se realizan peticiones a Google Fonts.
 
-Luego apuntar el docroot del dominio a `/web_movildrive/` en el panel de IONOS.
+El fondo se revela al mover el cursor. En móvil, el foco recorre suavemente la imagen y responde al dedo. Los controles permiten elegir imagen, avanzar, retroceder y pausar. Las flechas del teclado también cambian de imagen. Se respeta la preferencia de movimiento reducido y se suspende la animación al ocultar la pestaña.
 
-## Notas
+## Publicación
 
-- Las páginas heredadas (`car-sharing.html`, `fleet-manager-movildrive.html`, `contact.html`, `login-fleet-manager.html`, `condiciones.html`, `privacidad.html`, `contacto.html`) viven en la raíz vieja `/` del FTP. Esta landing las enlaza con URL absoluta a `https://www.movildrive.com/...`.
-- Las imágenes (`/img/scr-img/special.png`, `/img/scr-img/video.jpg`) también viven en la raíz vieja. Si futuras versiones llevan imágenes propias, ponerlas en `assets/img/`.
-- Dependencias por CDN: GSAP 3.12.5, ScrollTrigger, Lenis 1.3.3, Google Fonts (DM Serif Display + DM Sans).
+Producción: https://www.movildrive.com/ · alojamiento IONOS SFTP, directorio `/web_movildrive/`.
+Repositorio: https://github.com/nexusfinlabs/web_movildrive · rama `main`.
+
+La portada anterior y sus CSS/JS se conservan en `_backup/`, carpeta excluida de Git. La copia del servidor anterior a esta publicación está en `_backup/production-before-coming-soon-20261006/`. Los archivos anteriores `assets/css/main.css` y `assets/js/main.js` siguen intactos, incluyendo los cambios locales previos. `aboutme.html` permanece disponible.
+
+La nueva landing utiliza `index.html`, `assets/css/coming-soon.css`, `assets/js/coming-soon.js`, `assets/fonts/` y las imágenes `four-towers.png`, `city.png`, `concept.png`, `kio.png` y `emblem.png` de `assets/img/coming-soon/`.
+
+Para actualizar, cargar primero estos recursos por SFTP y comprobar sus URLs públicas. Subir después el HTML como archivo temporal y renombrarlo a `index.html`. No sincronizar ni borrar archivos ajenos a esta landing. Las credenciales se obtienen de `~/.env.global` (`IONOS_SFTP_HOST`, `IONOS_SFTP_USER`, `IONOS_SFTP_PASS`) y nunca se guardan en el repositorio. El historial de despliegue anterior se conserva en `_backup/README-before-coming-soon.md`.
