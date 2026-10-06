@@ -17,7 +17,7 @@ Abrir http://localhost:4173. Recargar el navegador después de cada cambio.
 - `index.html`: textos, contacto, imágenes y orden del carrusel.
 - `assets/css/coming-soon.css`: tipografía, composición, colores, máscara del foco y diseño móvil.
 - `assets/js/coming-soon.js`: objeto `SETTINGS` al principio del archivo. Duración de imagen: 6500 ms; radio del foco: 340 px en escritorio y 235 px en móvil.
-- `assets/img/coming-soon/`: imágenes originales; el carrusel utiliza las cuatro de los coches. El emblema se utiliza en la cabecera y el favicon.
+- `assets/img/coming-soon/`: imágenes originales; el carrusel utiliza las cuatro de los coches. La cabecera muestra solo el nombre; el emblema se utiliza únicamente como favicon.
 - `assets/fonts/`: Instrument Sans local; no se realizan peticiones a Google Fonts.
 
 El fondo se revela al mover el cursor. En móvil, el foco recorre suavemente la imagen y responde al dedo. Los controles permiten elegir imagen, avanzar, retroceder y pausar. Las flechas del teclado también cambian de imagen. Se respeta la preferencia de movimiento reducido y se suspende la animación al ocultar la pestaña.

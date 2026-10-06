@@ -61,7 +61,6 @@ button:not(:disabled), a { cursor: pointer; }
 
 .header { display: flex; justify-content: space-between; align-items: center; margin: 0 var(--edge); height: 116px; flex-shrink: 0; border-bottom: 1px solid #ffffff16; }
 .brand { display: flex; align-items: center; gap: 8px; }
-.brand img { width: 60px; height: 60px; object-fit: contain; margin-left: -11px; }
 .brand-wordmark { font-size: 14px; font-weight: 500; letter-spacing: .26em; }
 .header-right { display: flex; align-items: center; gap: 48px; }
 .location { color: var(--muted); font-size: 9px; letter-spacing: .18em; }
@@ -145,7 +144,6 @@ svg { display: block; stroke: currentColor; stroke-width: 1.2; stroke-linecap: r
 @media (max-width: 700px) {
   .experience { min-height: max(710px, 100svh); }
   .header { height: 91px; }
-  .brand img { width: 53px; height: 53px; }
   .brand-wordmark { font-size: 11px; letter-spacing: .21em; }
   .header-right { gap: 0; }
   .location { display: none; }
